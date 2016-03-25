@@ -10,6 +10,7 @@ import playn.core.ImageLayer;
 
 import react.UnitSlot;
 
+import tripleplay.game.Screen;
 import tripleplay.game.UIScreen;
 import tripleplay.game.ScreenStack;
 
@@ -18,61 +19,79 @@ import tripleplay.ui.layout.AxisLayout;
 
 //=============================================================================================
 
-public class HomeScreen extends UIScreen{
+public class HomeScreen extends Screen{
 
-  public static final Font TITLE_FONT = graphics().createFont("bradley hand itc regular",Font.Style.PLAIN,24);
+  public static final Font TITLE_FONT = graphics().createFont("Helvetica",Font.Style.PLAIN,24);
 
   private Root root;
   private ScreenStack ss;  
-  private final TestScreen testScreen;
+
+  // insert screen
   private final GameOver gameOver;
+  private final TestScreen testScreen;
+  private final StartScreen startScreen;
 
+  // insert image layer
+  private ImageLayer bg;
+  private ImageLayer nameGame;
   private ImageLayer startButton;
-  private ImageLayer exitButton;
+  private ImageLayer settingButton;
 
-  public HomeScreen( ScreenStack ss) {
-    this.ss = ss;
-    this.testScreen = new TestScreen(ss);
-    this.gameOver   = new GameOver(ss); 
+  public HomeScreen(final ScreenStack ss) {
+    float x = 180f, y = 270.0f;
 
-       
+    this.ss = ss;    
+    this.gameOver     = new GameOver(ss); 
+    this.testScreen   = new TestScreen(ss);
+    this.startScreen  = new StartScreen(ss);    
+
+    //==================================================================
+    // insert bg
+    Image bgImage = assets().getImage("images/bg2.png");
+    this.bg = graphics().createImageLayer(bgImage);
+
+    //==================================================================
+    // insert name text
+    Image nameImage = assets().getImage("images/name.png");
+    this.nameGame = graphics().createImageLayer(nameImage);
+    nameGame.setTranslation(100f,90.0f);
+
+    //==================================================================
+    // insert start button
+    Image startButtonImage = assets().getImage("images/StartBut.png");
+    this.startButton = graphics().createImageLayer(startButtonImage);
+    startButton.setTranslation(x,y);    
+
+    startButton.addListener(new Mouse.LayerAdapter(){
+      @Override
+      public void onMouseUp(Mouse.ButtonEvent event){
+        ss.push(startScreen);
+      }
+    });
+
+    //==================================================================
+    // insert setting button
+    Image settingButtonImage = assets().getImage("images/settingBut.png");
+    this.settingButton = graphics().createImageLayer(settingButtonImage);
+    settingButton.setTranslation(585,10);
+
+    settingButton.addListener(new Mouse.LayerAdapter(){
+      @Override
+      public void onMouseUp(Mouse.ButtonEvent event){
+        ss.push(testScreen);
+      }
+    });    
+
+    //==================================================================
+
   }
 
   @Override
   public void wasShown(){
     super.wasShown();
-
-    root = iface.createRoot(
-      AxisLayout.vertical().gap(15),
-      SimpleStyles.newSheet(), this.layer);
-
-    root.addStyles(Style.BACKGROUND
-      .is(Background.image(assets().getImage("images/main.png"))    
-    ));
-    
-    root.setSize(width(), height());    
-    
-    //===============================================================
-
-    Image startImage = assets().getImageSync("images/startBut.png");
-    this.startButton = graphics().createImageLayer(startImage);
-
-    root.add(new ImageButton(startImage).onClick(new UnitSlot() {
-      public void onEmit() {
-        ss.push(testScreen);
-      }
-    }));
-
-    //===============================================================
-
-    Image exitImage = assets().getImageSync("images/exitBut.png");
-    this.exitButton = graphics().createImageLayer(exitImage);
-
-    root.add(new ImageButton(exitImage).onClick(new UnitSlot() {
-      public void onEmit() {
-        ss.push(testScreen);
-      }
-    }));
-   
+    this.layer.add(bg);
+    this.layer.add(nameGame);
+    this.layer.add(startButton);
+    this.layer.add(settingButton);   
   }
 }
