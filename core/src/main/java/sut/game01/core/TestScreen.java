@@ -1,17 +1,20 @@
 package sut.game01.core;
 
 import static playn.core.PlayN.*;
+import static playn.core.PlayN.graphics;
 
 import playn.core.Font;
 import playn.core.Mouse;
-import react.UnitSlot;
-import tripleplay.game.Screen;
-import tripleplay.game.ScreenStack;
-import tripleplay.ui.*;
-import tripleplay.ui.layout.AxisLayout;
-import static playn.core.PlayN.graphics;
 import playn.core.Image;
 import playn.core.ImageLayer;
+
+import react.UnitSlot;
+
+import tripleplay.game.Screen;
+import tripleplay.game.ScreenStack;
+
+import tripleplay.ui.*;
+import tripleplay.ui.layout.AxisLayout;
 
 public class TestScreen extends Screen{
 
@@ -24,12 +27,14 @@ public class TestScreen extends Screen{
   public TestScreen(final ScreenStack ss) {
     this.ss = ss;
 
-    Image bgImage = assets().getImage("images/bg.png");
-    this.bg = graphics().createImageLayer(bgImage);    
+    Image bgImage = assets().getImage("images/main.png");
+    this.bg = graphics().createImageLayer(bgImage);  
+
+    //==================================================================  
   
-    Image backImage = assets().getImage("images/back.png");
+    Image backImage = assets().getImage("images/backBut.png");
     this.backButton = graphics().createImageLayer(backImage);
-    backButton.setTranslation(10, 10);
+    backButton.setTranslation(10,405);
 
     backButton.addListener(new Mouse.LayerAdapter(){
       @Override
