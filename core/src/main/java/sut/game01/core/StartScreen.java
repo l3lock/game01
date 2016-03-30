@@ -41,12 +41,12 @@ public class StartScreen extends UIScreen{
 
     //==================================================================
     // insert bg
-    Image bgImage = assets().getImage("images/bg2.png");
+    Image bgImage = assets().getImage("images/bg/bg2.png");
     this.bg = graphics().createImageLayer(bgImage);
 
     //==================================================================    
     // insert new game button
-    Image startButtonImage = assets().getImage("images/newBut.png");
+    Image startButtonImage = assets().getImage("images/button/newBut.png");
     this.newButton = graphics().createImageLayer(startButtonImage);
     newButton.setTranslation(x,y);    
 
@@ -59,7 +59,7 @@ public class StartScreen extends UIScreen{
 
     //==================================================================    
     // insert load button
-    Image loadButtonImage = assets().getImage("images/loadBut.png");
+    Image loadButtonImage = assets().getImage("images/button/loadBut.png");
     this.loadButton = graphics().createImageLayer(loadButtonImage);
     loadButton.setTranslation(x,y + 90);    
 
@@ -72,7 +72,7 @@ public class StartScreen extends UIScreen{
 
     //==================================================================    
     // insert back button
-    Image backImage = assets().getImage("images/backBut.png");
+    Image backImage = assets().getImage("images/button/backBut.png");
     this.backButton = graphics().createImageLayer(backImage);
     backButton.setTranslation(x,y + 180);
 
@@ -85,7 +85,7 @@ public class StartScreen extends UIScreen{
 
     //==================================================================
     // insert setting button
-    Image settingButtonImage = assets().getImage("images/settingBut.png");
+    Image settingButtonImage = assets().getImage("images/button/settingBut.png");
     this.settingButton = graphics().createImageLayer(settingButtonImage);
     settingButton.setTranslation(585,10);
 
