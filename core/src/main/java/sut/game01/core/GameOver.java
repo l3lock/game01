@@ -1,21 +1,22 @@
 package sut.game01.core;
 
 import static playn.core.PlayN.*;
+import static playn.core.PlayN.graphics;
+
+import react.UnitSlot;
 
 import playn.core.Font;
 import playn.core.Mouse;
-import react.UnitSlot;
-import tripleplay.game.Screen;
-import tripleplay.game.ScreenStack;
-import tripleplay.ui.*;
-import tripleplay.ui.layout.AxisLayout;
-import static playn.core.PlayN.graphics;
 import playn.core.Image;
 import playn.core.ImageLayer;
 
-public class GameOver extends Screen{
+import tripleplay.ui.*;
+import tripleplay.game.Screen;
+import tripleplay.game.ScreenStack;
+import tripleplay.ui.layout.AxisLayout;
 
-  public static final Font TITLE_FONT = graphics().createFont("Helvetica",Font.Style.PLAIN,24);
+
+public class GameOver extends Screen{
 
   private final ScreenStack ss;
 
@@ -31,7 +32,7 @@ public class GameOver extends Screen{
     this.ss = ss;
     this.testScreen = new TestScreen(ss);
 
-    Image bgImage = assets().getImage("images/bg4.png");
+    Image bgImage = assets().getImage("images/bg/bg4.png");
     this.bg = graphics().createImageLayer(bgImage); 
   
     //==================================================================
@@ -49,7 +50,7 @@ public class GameOver extends Screen{
 
     //==================================================================
     // insert setting button
-    Image settingButtonImage = assets().getImage("images/settingBut.png");
+    Image settingButtonImage = assets().getImage("images/button/settingBut.png");
     this.settingButton = graphics().createImageLayer(settingButtonImage);
     settingButton.setTranslation(585,10);
 

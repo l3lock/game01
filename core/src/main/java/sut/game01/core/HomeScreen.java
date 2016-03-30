@@ -47,7 +47,7 @@ public class HomeScreen extends Screen{
 
     //==================================================================
     // insert bg
-    Image bgImage = assets().getImage("images/bg2.png");
+    Image bgImage = assets().getImage("images/bg/bg2.png");
     this.bg = graphics().createImageLayer(bgImage);
 
     //==================================================================
@@ -58,7 +58,7 @@ public class HomeScreen extends Screen{
 
     //==================================================================
     // insert start button
-    Image startButtonImage = assets().getImage("images/StartBut.png");
+    Image startButtonImage = assets().getImage("images/button/StartBut.png");
     this.startButton = graphics().createImageLayer(startButtonImage);
     startButton.setTranslation(x,y);    
 
@@ -71,7 +71,7 @@ public class HomeScreen extends Screen{
 
     //==================================================================
     // insert setting button
-    Image settingButtonImage = assets().getImage("images/settingBut.png");
+    Image settingButtonImage = assets().getImage("images/button/settingBut.png");
     this.settingButton = graphics().createImageLayer(settingButtonImage);
     settingButton.setTranslation(585,10);
 

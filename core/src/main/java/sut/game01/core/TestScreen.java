@@ -27,12 +27,12 @@ public class TestScreen extends Screen{
   public TestScreen(final ScreenStack ss) {
     this.ss = ss;
 
-    Image bgImage = assets().getImage("images/main.png");
+    Image bgImage = assets().getImage("images/bg/main.png");
     this.bg = graphics().createImageLayer(bgImage);  
 
     //==================================================================  
   
-    Image backImage = assets().getImage("images/backBut.png");
+    Image backImage = assets().getImage("images/button/backBut.png");
     this.backButton = graphics().createImageLayer(backImage);
     backButton.setTranslation(10,405);
 
