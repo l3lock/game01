@@ -3,18 +3,12 @@ package sut.game01.core;
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
 
-import react.UnitSlot;
-
-import playn.core.Font;
 import playn.core.Mouse;
 import playn.core.Image;
 import playn.core.ImageLayer;
 
-import tripleplay.ui.*;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
-import tripleplay.ui.layout.AxisLayout;
-
 
 public class GameOver extends Screen{
 
