@@ -3,19 +3,12 @@ package sut.game01.core;
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
 
-import playn.core.Font;
-import playn.core.Mouse;
-import playn.core.Image;
-import playn.core.ImageLayer;
+import playn.core.*;
 
-import react.UnitSlot;
-
-import tripleplay.game.Screen;
 import tripleplay.game.UIScreen;
 import tripleplay.game.ScreenStack;
 
 import tripleplay.ui.*;
-import tripleplay.ui.layout.AxisLayout;
 
 //=============================================================================================
 
@@ -25,7 +18,6 @@ public class StartScreen extends UIScreen{
   private ScreenStack ss;  
 
   private final TestScreen testScreen;
-
   // insert image layer
   private ImageLayer bg;
   private ImageLayer newButton;
@@ -37,7 +29,7 @@ public class StartScreen extends UIScreen{
     float x = 180f, y = 110.0f;
 
     this.ss = ss;
-    this.testScreen = new TestScreen(ss);   
+    this.testScreen = new TestScreen(ss);
 
     //==================================================================
     // insert bg

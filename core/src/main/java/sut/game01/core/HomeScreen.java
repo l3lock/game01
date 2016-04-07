@@ -3,19 +3,12 @@ package sut.game01.core;
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
 
-import playn.core.Font;
-import playn.core.Mouse;
-import playn.core.Image;
-import playn.core.ImageLayer;
-
-import react.UnitSlot;
+import playn.core.*;
 
 import tripleplay.game.Screen;
-import tripleplay.game.UIScreen;
 import tripleplay.game.ScreenStack;
 
 import tripleplay.ui.*;
-import tripleplay.ui.layout.AxisLayout;
 
 //=============================================================================================
 
@@ -41,7 +34,7 @@ public class HomeScreen extends Screen{
     float x = 180f, y = 270.0f;
 
     this.ss = ss;    
-    this.gameOver     = new GameOver(ss); 
+    this.gameOver     = new GameOver(ss);
     this.testScreen   = new TestScreen(ss);
     this.startScreen  = new StartScreen(ss);    
 
@@ -83,7 +76,6 @@ public class HomeScreen extends Screen{
     });    
 
     //==================================================================
-
   }
 
   @Override
@@ -92,6 +84,16 @@ public class HomeScreen extends Screen{
     this.layer.add(bg);
     this.layer.add(nameGame);
     this.layer.add(startButton);
-    this.layer.add(settingButton);   
+    this.layer.add(settingButton);
+
+    // if push enter key go to testScreen
+    PlayN.keyboard().setListener(new Keyboard.Adapter() {
+      @Override
+      public void onKeyUp(Keyboard.Event event) {
+        if(event.key() == Key.ENTER) {
+          ss.push(startScreen);
+        }
+      }
+    });
   }
 }

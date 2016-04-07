@@ -25,19 +25,6 @@ public class Zealot {
 	private int offset = 8;
 
 	public Zealot(final float x, final float y) {
-		PlayN.keyboard().setListener(new Keyboard.Adapter() {
-
-			@Override
-			public void onKeyUp(Keyboard.Event event) {
-				if(event.key() == Key.SPACE) {
-					switch(state) {
-						case IDLE: state = State.RUN;break;
-						case RUN: state = State.ATK;break;
-						case ATK: state = State.IDLE;break;
-					}
-				}
-			}
-		});
 
 		sprite = SpriteLoader.getSprite("images/zealot.json");
 		sprite.addCallback(new Callback<Sprite>() {
@@ -65,6 +52,19 @@ public class Zealot {
 
 	public void update(int delta) {
 		if(hasLoaded == false) return;
+
+		PlayN.keyboard().setListener(new Keyboard.Adapter() {
+			@Override
+			public void onKeyUp(Keyboard.Event event) {
+				if(event.key() == Key.SPACE) {
+					switch(state) {
+						case IDLE: state = State.RUN;break;
+						case RUN: state = State.ATK;break;
+						case ATK: state = State.IDLE;break;
+					}
+				}
+			}
+		});
 
 		e += delta;
 		if(e > 150) {
