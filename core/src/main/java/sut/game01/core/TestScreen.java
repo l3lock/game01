@@ -30,8 +30,11 @@ public class TestScreen extends Screen{
   public TestScreen(final ScreenStack ss) {
     this.ss = ss;
 
+    z = new Zealot(560f, 400f);
     Image bgImage = assets().getImage("images/bg/main.png");
-    this.bg = graphics().createImageLayer(bgImage);  
+    this.bg = graphics().createImageLayer(bgImage);
+
+    this.layer.add(bg);
 
     //==================================================================  
   
@@ -52,10 +55,8 @@ public class TestScreen extends Screen{
   public void wasShown(){
     super.wasShown();
 
-    z = new Zealot(560f, 400f);
     this.layer.add(z.layer());
 
-    this.layer.add(bg);
     this.layer.add(backButton);
   }
 
