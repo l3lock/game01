@@ -31,7 +31,7 @@ public class GameOver extends Screen{
   
     //==================================================================
     // insert gameOver text
-    Image backImage = assets().getImage("images/gameOver.png");
+    Image backImage = assets().getImage("images/bg/gameOver.png");
     this.backButton = graphics().createImageLayer(backImage);    
     backButton.setTranslation(90f,90.0f);
 

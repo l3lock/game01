@@ -31,6 +31,7 @@ public class TestScreen extends Screen{
     this.ss = ss;
 
     z = new Zealot(560f, 400f);
+
     Image bgImage = assets().getImage("images/bg/main.png");
     this.bg = graphics().createImageLayer(bgImage);
 

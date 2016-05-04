@@ -16,13 +16,13 @@ public class Zealot {
 	private Zealot z;
 
 	public enum State {
-		IDLE, RUN, ATK
+		HSIT, HWALK, ATTK, IDLE, WALK
 	};
 
 	private State state = State.IDLE;
 
 	private int e = 0;
-	private int offset = 8;
+	private int offset = 18;
 
 	public Zealot(final float x, final float y) {
 
@@ -58,23 +58,25 @@ public class Zealot {
 			public void onKeyUp(Keyboard.Event event) {
 				if(event.key() == Key.SPACE) {
 					switch(state) {
-						case IDLE: state = State.RUN;break;
-						case RUN: state = State.ATK;break;
-						case ATK: state = State.IDLE;break;
+						case IDLE: state = State.HSIT;break;
+						case HSIT: state = State.HWALK;break;
+						case HWALK: state = State.IDLE;break;
 					}
 				}
 			}
 		});
 
 		e += delta;
-		if(e > 150) {
+		if(e > 250) {
 			switch(state) {
-				case IDLE: offset = 0;break;
-				case RUN:  offset = 4;break;
-				case ATK:  offset = 8;break;
+				case HSIT:	offset = 0; break;
+				case HWALK: offset = 12; break;
+				case IDLE: 	offset = 18; break;
+				case WALK:  offset = 24; break;
+				case ATTK:  offset = 30; break;
 			}
 
-			si = offset +((si + 1) % 4);
+			si = offset +((si + 1) % 6);
 			sprite.setSprite(si);
 			e = 0;
 		}
