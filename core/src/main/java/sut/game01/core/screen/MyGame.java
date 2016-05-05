@@ -1,16 +1,8 @@
-package sut.game01.core;
+package sut.game01.core.screen;
 
-import static playn.core.PlayN.*;
-
-import playn.core.Game;
-import playn.core.Image;
-import playn.core.ImageLayer;
 import playn.core.Game;
 import playn.core.util.Clock;
 import tripleplay.game.ScreenStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MyGame extends Game.Default {
 

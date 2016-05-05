@@ -1,23 +1,23 @@
-package sut.game01.core;
+package sut.game01.core.screen;
 
-import static playn.core.PlayN.*;
-import static playn.core.PlayN.graphics;
-
-import playn.core.*;
-
-import tripleplay.game.UIScreen;
+import playn.core.Image;
+import playn.core.ImageLayer;
+import playn.core.Mouse;
+import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
-import tripleplay.ui.*;
+import static playn.core.PlayN.assets;
+import static playn.core.PlayN.graphics;
 
 //=============================================================================================
 
-public class StartScreen extends UIScreen{
+public class StartScreen extends Screen {
 
-  private Root root;
   private ScreenStack ss;  
 
-  private final TestScreen testScreen;
+  private final GameScreen gameScreen;
+  private final Setting setting;
+
   // insert image layer
   private ImageLayer bg;
   private ImageLayer newButton;
@@ -29,7 +29,8 @@ public class StartScreen extends UIScreen{
     float x = 180f, y = 110.0f;
 
     this.ss = ss;
-    this.testScreen = new TestScreen(ss);
+    this.gameScreen = new GameScreen(ss);
+    this.setting = new Setting(ss);
 
     //==================================================================
     // insert bg
@@ -45,7 +46,7 @@ public class StartScreen extends UIScreen{
     newButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(testScreen);
+        ss.push(gameScreen);
       }
     });
 
@@ -58,7 +59,7 @@ public class StartScreen extends UIScreen{
     loadButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(testScreen);
+        ss.push(gameScreen);
       }
     });
 
@@ -84,7 +85,7 @@ public class StartScreen extends UIScreen{
     settingButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(testScreen);
+        ss.push(setting);
       }
     });    
 

@@ -1,4 +1,4 @@
-package sut.game01.core;
+package sut.game01.core.screen;
 
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
@@ -15,7 +15,8 @@ public class GameOver extends Screen{
   private final ScreenStack ss;
 
   // insert screen
-  private final TestScreen testScreen;
+  private final GameScreen gameScreen;
+  private final Setting setting;
 
   // insert image layer
   private ImageLayer bg;
@@ -24,7 +25,8 @@ public class GameOver extends Screen{
 
   public GameOver(final ScreenStack ss) {
     this.ss = ss;
-    this.testScreen = new TestScreen(ss);
+    this.gameScreen = new GameScreen(ss);
+    this.setting = new Setting(ss);
 
     Image bgImage = assets().getImage("images/bg/bg4.png");
     this.bg = graphics().createImageLayer(bgImage); 
@@ -51,7 +53,7 @@ public class GameOver extends Screen{
     settingButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(testScreen);
+        ss.push(setting);
       }
     });    
 

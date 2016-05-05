@@ -1,4 +1,4 @@
-package sut.game01.core;
+package sut.game01.core.screen;
 
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
@@ -17,7 +17,7 @@ import tripleplay.game.ScreenStack;
 import tripleplay.ui.*;
 import tripleplay.ui.layout.AxisLayout;
 
-public class TestScreen extends Screen{
+public class GameScreen extends Screen{
 
   public static final Font TITLE_FONT = graphics().createFont("Helvetica",Font.Style.PLAIN,24);
 
@@ -27,7 +27,7 @@ public class TestScreen extends Screen{
   private final ImageLayer bg;
   private final ImageLayer backButton;
 
-  public TestScreen(final ScreenStack ss) {
+  public GameScreen(final ScreenStack ss) {
     this.ss = ss;
 
     z = new Zealot(560f, 400f);

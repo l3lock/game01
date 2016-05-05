@@ -1,4 +1,4 @@
-package sut.game01.core;
+package sut.game01.core.screen;
 
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
@@ -21,8 +21,9 @@ public class HomeScreen extends Screen{
 
   // insert screen
   private final GameOver gameOver;
-  private final TestScreen testScreen;
+  private final GameScreen gameScreen;
   private final StartScreen startScreen;
+  private final Setting setting;
 
   // insert image layer
   private ImageLayer bg;
@@ -35,8 +36,9 @@ public class HomeScreen extends Screen{
 
     this.ss = ss;    
     this.gameOver     = new GameOver(ss);
-    this.testScreen   = new TestScreen(ss);
-    this.startScreen  = new StartScreen(ss);    
+    this.gameScreen = new GameScreen(ss);
+    this.startScreen  = new StartScreen(ss);
+    this.setting = new Setting(ss);
 
     //==================================================================
     // insert bg
@@ -71,11 +73,14 @@ public class HomeScreen extends Screen{
     settingButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(testScreen);
+        ss.push(setting);
       }
     });    
 
     //==================================================================
+    // insert sound
+    Sound sound = assets().getSound("sounds/Epilogue");
+    sound.play();
   }
 
   @Override
@@ -86,7 +91,7 @@ public class HomeScreen extends Screen{
     this.layer.add(startButton);
     this.layer.add(settingButton);
 
-    // if push enter key go to testScreen
+    // if push enter key go to gameScreen
     PlayN.keyboard().setListener(new Keyboard.Adapter() {
       @Override
       public void onKeyUp(Keyboard.Event event) {
