@@ -35,6 +35,7 @@ public class Zealot {
 				sprite.layer().setOrigin(sprite.width()  / 2f,
 										 sprite.height() / 2f);
 				sprite.layer().setTranslation(x, y + 13f);
+
 				hasLoaded = true;
 			}
 

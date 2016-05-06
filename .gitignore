@@ -1,2 +1,3 @@
 *.jar
 *.class
+/tactic/assets/target/classes/assets/images/

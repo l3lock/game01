@@ -14,9 +14,6 @@ import tripleplay.ui.*;
 
 public class HomeScreen extends Screen{
 
-  public static final Font TITLE_FONT = graphics().createFont("Helvetica",Font.Style.PLAIN,24);
-
-  private Root root;
   private ScreenStack ss;  
 
   // insert screen
@@ -30,6 +27,8 @@ public class HomeScreen extends Screen{
   private ImageLayer nameGame;
   private ImageLayer startButton;
   private ImageLayer settingButton;
+
+  private Sound music;
 
   public HomeScreen(final ScreenStack ss) {
     float x = 180f, y = 270.0f;
@@ -75,22 +74,26 @@ public class HomeScreen extends Screen{
       public void onMouseUp(Mouse.ButtonEvent event){
         ss.push(setting);
       }
-    });    
+    });
 
     //==================================================================
     // insert sound
-    Sound sound = assets().getSound("sounds/Epilogue");
-    sound.play();
+    music = assets().getSound("sounds/Epilogue");
+    music.setVolume(0.5f);    // set volume
   }
 
   @Override
   public void wasShown(){
     super.wasShown();
+
+    music.play();
+
     this.layer.add(bg);
     this.layer.add(nameGame);
     this.layer.add(startButton);
     this.layer.add(settingButton);
 
+    //==================================================================
     // if push enter key go to gameScreen
     PlayN.keyboard().setListener(new Keyboard.Adapter() {
       @Override
