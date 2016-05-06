@@ -1,8 +1,11 @@
 package sut.game01.core.screen;
 
 import playn.core.Game;
+import playn.core.Sound;
 import playn.core.util.Clock;
 import tripleplay.game.ScreenStack;
+
+import static playn.core.PlayN.assets;
 
 public class MyGame extends Game.Default {
 
@@ -11,7 +14,7 @@ public class MyGame extends Game.Default {
   protected final Clock.Source clock = new Clock.Source(UPDATE_RATE);
 
   public MyGame() {
-    super(UPDATE_RATE); // call update every 33ms (30 times per second)
+    super(UPDATE_RATE);
   }
 
   @Override
