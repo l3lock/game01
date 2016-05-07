@@ -3,7 +3,7 @@ package sut.game01.java;
 import playn.core.PlayN;
 import playn.java.JavaPlatform;
 
-import sut.game01.core.screen.MyGame;
+import sut.game01.core.screens.MyGame;
 
 public class MyGameJava {
 

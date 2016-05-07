@@ -1,11 +1,11 @@
-package sut.game01.core.character;
+package sut.game01.core.characters;
 
 import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Layer;
 import playn.core.PlayN;
-import sut.game01.core.sprite.Sprite;
-import sut.game01.core.sprite.SpriteLoader;
+import sut.game01.core.spriteManage.Sprite;
+import sut.game01.core.spriteManage.SpriteLoader;
 import playn.core.util.Callback;
 
 public class Zealot {

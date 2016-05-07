@@ -1,7 +1,6 @@
-package sut.game01.core.screen;
+package sut.game01.core.screens;
 
-import playn.core.Image;
-import playn.core.ImageLayer;
+import playn.core.*;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
@@ -30,5 +29,16 @@ public class Setting extends Screen {
         super.wasShown();
 
         this.layer.add(bg);
+
+        //==================================================================
+        // if push enter key go to gameScreen
+        PlayN.keyboard().setListener(new Keyboard.Adapter() {
+            @Override
+            public void onKeyUp(Keyboard.Event event) {
+                if(event.key() == Key.ENTER) {
+                    ss.remove(ss.top());
+                }
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package sut.game01.core.screen;
+package sut.game01.core.screens;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -8,7 +8,7 @@ import org.jbox2d.dynamics.*;
 import playn.core.*;
 import playn.core.util.Clock;
 import playn.core.CanvasImage;
-import sut.game01.core.character.Zealot;
+import sut.game01.core.characters.Chis;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
@@ -17,7 +17,7 @@ import static playn.core.PlayN.*;
 
 public class GameScreen extends Screen{
 
-  private Zealot z;
+  private Chis chis;
 
   private final ScreenStack ss;
   private final ImageLayer bg;
@@ -39,14 +39,12 @@ public class GameScreen extends Screen{
   public GameScreen(final ScreenStack ss) {
     this.ss = ss;
 
-    z = new Zealot(560f, 400f);
-
     Image bgImage = assets().getImage("images/bg/main.png");
     this.bg = graphics().createImageLayer(bgImage);
 
     this.layer.add(bg);
 
-    //==================================================================  
+    //==================================================================
     // insert back button
     Image backImage = assets().getImage("images/button/backBut.png");
     this.backButton = graphics().createImageLayer(backImage);
@@ -60,12 +58,14 @@ public class GameScreen extends Screen{
     });
 
     //==================================================================
-    // define wrold
+    // define world
 
     Vec2 gravity = new Vec2(0.0f,10.0f);
     world = new World(gravity);
     world.setWarmStarting(true);
     world.setAutoClearForces(true);
+
+    chis = new Chis(560f, 400f);
 
     mouse().setListener(new Mouse.Adapter(){
       @Override
@@ -96,7 +96,7 @@ public class GameScreen extends Screen{
   public void wasShown(){
     super.wasShown();
 
-    this.layer.add(z.layer());
+    this.layer.add(chis.layer());
 
     this.layer.add(backButton);
 
@@ -127,7 +127,7 @@ public class GameScreen extends Screen{
   @Override
   public void update (int delta) {
     super.update(delta);
-    z.update(delta);
+    chis.update(delta);
 
     world.step(0.033f,10,10);
   }
