@@ -1,4 +1,4 @@
-package sut.game01.core.screen;
+package sut.game01.core.screens;
 
 import playn.core.Image;
 import playn.core.ImageLayer;

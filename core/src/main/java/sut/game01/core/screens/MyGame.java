@@ -1,11 +1,8 @@
-package sut.game01.core.screen;
+package sut.game01.core.screens;
 
 import playn.core.Game;
-import playn.core.Sound;
 import playn.core.util.Clock;
 import tripleplay.game.ScreenStack;
-
-import static playn.core.PlayN.assets;
 
 public class MyGame extends Game.Default {
 

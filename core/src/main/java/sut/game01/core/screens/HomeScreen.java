@@ -1,4 +1,4 @@
-package sut.game01.core.screen;
+package sut.game01.core.screens;
 
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
@@ -7,8 +7,6 @@ import playn.core.*;
 
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
-
-import tripleplay.ui.*;
 
 //=============================================================================================
 
@@ -79,7 +77,7 @@ public class HomeScreen extends Screen{
     //==================================================================
     // insert sound
     music = assets().getSound("sounds/Epilogue");
-    music.setVolume(0.5f);    // set volume
+    music.setVolume(0.75f);    // set volume
   }
 
   @Override

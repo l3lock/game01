@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sut.game01.core.sprite;
+package sut.game01.core.spriteManage;
 
 import java.util.ArrayList;
 import java.util.HashMap;

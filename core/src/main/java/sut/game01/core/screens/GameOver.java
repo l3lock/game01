@@ -1,4 +1,4 @@
-package sut.game01.core.screen;
+package sut.game01.core.screens;
 
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
