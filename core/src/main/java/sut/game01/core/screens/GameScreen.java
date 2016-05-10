@@ -1,7 +1,6 @@
 package sut.game01.core.screens;
 
 import org.jbox2d.callbacks.DebugDraw;
-import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
@@ -13,15 +12,24 @@ import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static playn.core.PlayN.*;
 
 public class GameScreen extends Screen{
 
-  private Chis chis;  // use chis character
+  // define for screen
 
   private final ScreenStack ss;
   private final ImageLayer bg;
   private final ImageLayer backButton;
+
+  //=======================================================
+  // define for character
+
+  private Chis chis;  // use chis character
+  private List<Chis> chisList ; //  use chis in list
 
   //=======================================================
   // define for world
@@ -72,7 +80,11 @@ public class GameScreen extends Screen{
     groundShape.set(new Vec2(0, height), new Vec2(width, height));
     ground.createFixture(groundShape, 0.0f);
 
+    //==================================================================
+    // insert chis
+
     chis = new Chis(world, 560f, 280f);
+    chisList = new ArrayList<Chis>(); // use arrayList 
 
   }
 
@@ -81,38 +93,23 @@ public class GameScreen extends Screen{
     super.wasShown();
 
     this.layer.add(bg);
+    this.layer.add(backButton);
+
+    mouse().setListener(new Mouse.Adapter(){
+      @Override
+      public void onMouseUp(Mouse.ButtonEvent event){
+
+        Chis ch = new Chis(world, (float)event.x(), (float)event.y());
+        chisList.add(ch);
+      }
+    });
 
     this.layer.add(chis.layer());
 
-    this.layer.add(backButton);
-
-    Body ground = world.createBody(new BodyDef());
-    EdgeShape groundShape = new EdgeShape();
-    groundShape.set(new Vec2(0,height),new Vec2(width,height));
-    ground.createFixture(groundShape,0.0f);
-
-      mouse().setListener(new Mouse.Adapter(){
-      @Override
-      public void onMouseUp(Mouse.ButtonEvent event){
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyType.DYNAMIC;
-        bodyDef.position = new Vec2(event.x()*M_PER_PIXEL,event.y()*M_PER_PIXEL);
-
-        Body body = world.createBody(bodyDef);
-
-        CircleShape shape = new CircleShape();
-        shape.setRadius(0.4f);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density=1f;
-        fixtureDef.friction=0.1f;
-        fixtureDef.restitution=1f;
-
-        body.createFixture(fixtureDef);
-        body.setLinearDamping(0.2f);
-      }
-    });
+    for(Chis c: chisList){
+      System.out.print("add");
+      this.layer.add(c.layer());
+    }
 
 
     //============================================================
@@ -142,6 +139,11 @@ public class GameScreen extends Screen{
     super.update(delta);
     chis.update(delta);
     world.step(0.033f,10,10);
+
+    for(Chis c: chisList){
+      this.layer.add(c.layer());
+      c.update(delta);
+    }
   }
 
   @Override
@@ -149,6 +151,10 @@ public class GameScreen extends Screen{
     super.paint(clock);
 
     chis.paint(clock);
+
+    for(Chis c: chisList){
+      c.paint(clock);
+    }
 
     if(showDebugDraw){
       debugDraw.getCanvas().clear();
