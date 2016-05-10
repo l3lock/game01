@@ -17,14 +17,14 @@ import static playn.core.PlayN.*;
 
 public class GameScreen extends Screen{
 
-  private Chis chis;
+  private Chis chis;  // use chis character
 
   private final ScreenStack ss;
   private final ImageLayer bg;
   private final ImageLayer backButton;
 
   //=======================================================
-  // insert for world
+  // define for world
 
   public static float M_PER_PIXEL = 1 / 26.666667f ;
   private static int width = 24;
@@ -42,10 +42,9 @@ public class GameScreen extends Screen{
     Image bgImage = assets().getImage("images/bg/main.png");
     this.bg = graphics().createImageLayer(bgImage);
 
-    this.layer.add(bg);
-
     //==================================================================
     // insert back button
+
     Image backImage = assets().getImage("images/button/backBut.png");
     this.backButton = graphics().createImageLayer(backImage);
     backButton.setTranslation(10,405);
@@ -65,14 +64,39 @@ public class GameScreen extends Screen{
     world.setWarmStarting(true);
     world.setAutoClearForces(true);
 
-    chis = new Chis(560f, 400f);
+    //==================================================================
+    // insert ground in world
 
-    mouse().setListener(new Mouse.Adapter(){
+    Body ground = world.createBody(new BodyDef());
+    EdgeShape groundShape = new EdgeShape();
+    groundShape.set(new Vec2(0, height), new Vec2(width, height));
+    ground.createFixture(groundShape, 0.0f);
+
+    chis = new Chis(world, 560f, 280f);
+
+  }
+
+  @Override
+  public void wasShown(){
+    super.wasShown();
+
+    this.layer.add(bg);
+
+    this.layer.add(chis.layer());
+
+    this.layer.add(backButton);
+
+    Body ground = world.createBody(new BodyDef());
+    EdgeShape groundShape = new EdgeShape();
+    groundShape.set(new Vec2(0,height),new Vec2(width,height));
+    ground.createFixture(groundShape,0.0f);
+
+      mouse().setListener(new Mouse.Adapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
-        bodyDef.position =new Vec2(event.x()*M_PER_PIXEL,event.y()*M_PER_PIXEL);
+        bodyDef.position = new Vec2(event.x()*M_PER_PIXEL,event.y()*M_PER_PIXEL);
 
         Body body = world.createBody(bodyDef);
 
@@ -90,20 +114,9 @@ public class GameScreen extends Screen{
       }
     });
 
-  }
 
-  @Override
-  public void wasShown(){
-    super.wasShown();
-
-    this.layer.add(chis.layer());
-
-    this.layer.add(backButton);
-
-    Body ground = world.createBody(new BodyDef());
-    EdgeShape groundShape = new EdgeShape();
-    groundShape.set(new Vec2(0,height),new Vec2(width,height));
-    ground.createFixture(groundShape,0.0f);
+    //============================================================
+    // debug mode
 
     if(showDebugDraw){
       CanvasImage image = graphics().createImage(
@@ -128,13 +141,14 @@ public class GameScreen extends Screen{
   public void update (int delta) {
     super.update(delta);
     chis.update(delta);
-
     world.step(0.033f,10,10);
   }
 
   @Override
   public void paint(Clock clock){
     super.paint(clock);
+
+    chis.paint(clock);
 
     if(showDebugDraw){
       debugDraw.getCanvas().clear();
