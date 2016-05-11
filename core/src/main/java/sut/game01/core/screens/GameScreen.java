@@ -36,7 +36,7 @@ public class GameScreen extends Screen{
 
   public static float M_PER_PIXEL = 1 / 26.666667f ;
   private static int width = 24;
-  private  static  int height = 18;
+  private static int height = 18;
 
   private World world;
   private DebugDrawBox2D debugDraw;
@@ -77,7 +77,7 @@ public class GameScreen extends Screen{
 
     Body ground = world.createBody(new BodyDef());
     EdgeShape groundShape = new EdgeShape();
-    groundShape.set(new Vec2(0, height), new Vec2(width, height));
+    groundShape.set(new Vec2(0, height - 3), new Vec2(width, height - 3));
     ground.createFixture(groundShape, 0.0f);
 
     //==================================================================
