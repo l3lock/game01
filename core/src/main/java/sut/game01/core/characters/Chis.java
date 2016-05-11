@@ -3,7 +3,6 @@ package sut.game01.core.characters;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
-import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Layer;
 import playn.core.PlayN;
@@ -20,7 +19,7 @@ public class Chis extends Screen{
     private boolean hasLoaded = false;
 
     public enum State {
-        ALERT, ATTK, IDLE, WALK, LWALK
+        ALERT, ATTK, IDLE, L_WALK, R_WALK
     }
 
     private State state = State.IDLE;
@@ -28,7 +27,6 @@ public class Chis extends Screen{
     private Body body;
 
     private int e = 0;
-    private int offset = 0;
 
     public Chis(final World world, final float x_px, final float y_px) {
 
@@ -63,8 +61,11 @@ public class Chis extends Screen{
         bodyDef.position = new Vec2(0, 0);
         Body body = world.createBody(bodyDef);
 
+        GameScreen.bodies.put(body, "test_" + GameScreen.k);
+        GameScreen.k++ ;
+
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(56 * GameScreen.M_PER_PIXEL / 2,
+        shape.setAsBox(54 * GameScreen.M_PER_PIXEL / 2,
                 sprite.layer().height() * GameScreen.M_PER_PIXEL / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -90,12 +91,25 @@ public class Chis extends Screen{
         PlayN.keyboard().setListener(new Keyboard.Adapter() {
             @Override
             public void onKeyUp(Keyboard.Event event) {
-                if(event.key() == Key.SPACE) {
-                    switch(state) {
-                        case IDLE: state = State.ATTK; break;
-                        case ATTK: state = State.WALK; break;
-                        case WALK: state = State.IDLE; break;
-                    }
+                switch (event.key()){
+                    case LEFT:
+                        state = State.IDLE; break;
+                    case RIGHT:
+                        state = State.IDLE; break;
+                    case SPACE:
+                        state = State.IDLE;
+                        body.applyForce(new Vec2(-10f, -800f), body.getPosition());
+                        break;
+                }
+            }
+
+            @Override
+            public void onKeyDown(Keyboard.Event event) {
+                switch (event.key()){
+                    case LEFT:
+                        state = State.L_WALK; break;
+                    case RIGHT:
+                        state = State.R_WALK; break;
                 }
             }
         });
@@ -103,13 +117,37 @@ public class Chis extends Screen{
         e += delta;
         if(e > 250) {
             switch(state) {
-                case ALERT: offset = 0;  break;
-                case IDLE: 	offset = 5; break;
-                case WALK:  offset = 8; break;
-                case ATTK:  offset = 12; break;
-            }
+                case ALERT:
+                    if (!(si >= 0 && si <= 4)){
+                        si = 0;
+                    }
+                    break;
 
-            si = offset +((si + 1) % 6);
+                case ATTK:
+                    if (!(si >= 5 && si <= 7)){
+                        si = 5;
+                    }
+                    break;
+
+                case IDLE:
+                    if (!(si >= 8 && si <= 12)){
+                        si = 8;
+                    }
+                    break;
+
+                case L_WALK:
+                    if (!(si >= 12 && si <= 15)){
+                        si = 12;
+                    }
+                    break;
+
+                case R_WALK:
+                    if (!(si >= 12 && si <= 15)){
+                        si = 12;
+                    }
+                    break;
+            }
+            si ++ ;
             sprite.setSprite(si);
             e = 0;
         }
@@ -124,19 +162,16 @@ public class Chis extends Screen{
                 body.getPosition().y / GameScreen.M_PER_PIXEL);
 
         sprite.layer().setRotation(body.getAngle());
-/*
+
         switch (state){
-            case WALK:
-                x += 5f;
-                sprite.layer().setTranslation(x, y + 13f);
+            case L_WALK:
+                body.applyForce(new Vec2(-5f, 0f), body.getPosition());
                 break;
-            case LWALK:
-                x -= 5f;
-                sprite.layer().setTranslation(x, y + 13f);
+
+            case R_WALK:
+                body.applyForce(new Vec2(5f, 0f), body.getPosition());
                 break;
         }
-*/
-
     }
 
 }
