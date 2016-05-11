@@ -122,6 +122,8 @@ public class Chis extends Screen{
         sprite.layer().setTranslation(
                 (body.getPosition().x / GameScreen.M_PER_PIXEL) - 10,
                 body.getPosition().y / GameScreen.M_PER_PIXEL);
+
+        sprite.layer().setRotation(body.getAngle());
 /*
         switch (state){
             case WALK:
