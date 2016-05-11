@@ -1,9 +1,14 @@
 package sut.game01.core.screens;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.callbacks.DebugDraw;
+import org.jbox2d.collision.Manifold;
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.contacts.Contact;
 import playn.core.*;
 import playn.core.util.Clock;
 import playn.core.CanvasImage;
@@ -12,18 +17,20 @@ import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static playn.core.PlayN.*;
 
 public class GameScreen extends Screen{
 
+  //=======================================================
   // define for screen
 
   private final ScreenStack ss;
   private final ImageLayer bg;
   private final ImageLayer backButton;
+  private final ImageLayer coin;
 
   //=======================================================
   // define for character
@@ -32,22 +39,34 @@ public class GameScreen extends Screen{
   private List<Chis> chisList ; //  use chis in list
 
   //=======================================================
+  // define
+
+  private int i = -1;
+  public static HashMap<Body,String> bodies = new HashMap<Body, String>();
+  public static int k = 0;
+  public static int point = 0;
+  public static String debugString = "";
+  public static String debugStringCoin = "";
+
+
+  //=======================================================
   // define for world
 
   public static float M_PER_PIXEL = 1 / 26.666667f ;
-  private static int width = 24;
+  private static int width = 54;
   private static int height = 18;
 
   private World world;
   private DebugDrawBox2D debugDraw;
-  private boolean showDebugDraw = true;
+  private boolean showDebugDraw = true; // open debug mode
+  //private boolean showDebugDraw = false; // close debug mode
 
   //=======================================================
 
   public GameScreen(final ScreenStack ss) {
     this.ss = ss;
 
-    Image bgImage = assets().getImage("images/bg/main.png");
+    Image bgImage = assets().getImage("images/bg/level_1.png");
     this.bg = graphics().createImageLayer(bgImage);
 
     //==================================================================
@@ -65,6 +84,12 @@ public class GameScreen extends Screen{
     });
 
     //==================================================================
+    // insert coin
+    Image coinImage = assets().getImage("images/coin.png");
+    this.coin = graphics().createImageLayer(coinImage);
+    coin.setTranslation(283,205);
+
+    //==================================================================
     // define world
 
     Vec2 gravity = new Vec2(0.0f,10.0f);
@@ -73,19 +98,58 @@ public class GameScreen extends Screen{
     world.setAutoClearForces(true);
 
     //==================================================================
-    // insert ground in world
+    // insert ground & left wall in world
 
     Body ground = world.createBody(new BodyDef());
     EdgeShape groundShape = new EdgeShape();
     groundShape.set(new Vec2(0, height - 3), new Vec2(width, height - 3));
     ground.createFixture(groundShape, 0.0f);
 
+    EdgeShape left_wall = new EdgeShape();
+    left_wall.set(new Vec2(0, 0), new Vec2(0, height));
+    ground.createFixture(left_wall, 0.0f);
+
+    // insert coin object
+    Body coinCircle = world.createBody(new BodyDef());
+    CircleShape coinCircleShape = new CircleShape();
+    coinCircleShape.setRadius(1.1f);
+    coinCircleShape.m_p.set(12f,9f);
+    coinCircle.createFixture(coinCircleShape, 0.0f);
+
     //==================================================================
     // insert chis
 
-    chis = new Chis(world, 560f, 280f);
-    chisList = new ArrayList<Chis>(); // use arrayList 
+    chis = new Chis(world, 40f, 360f);
 
+    world.setContactListener(new ContactListener() {
+      @Override
+      public void beginContact(Contact contact) {
+        Body a = contact.getFixtureA().getBody();
+        Body b = contact.getFixtureB().getBody();
+        if(bodies.get(a) != null){
+          point = point + 10;
+          debugString = bodies.get(a) + " contacted with " + bodies.get(b);
+          debugStringCoin = "Point : " + point;
+          b.applyForce(new Vec2(80f , -100f), b.getPosition());
+
+        }
+      }
+
+      @Override
+      public void endContact(Contact contact) {
+
+      }
+
+      @Override
+      public void preSolve(Contact contact, Manifold manifold) {
+
+      }
+
+      @Override
+      public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+      }
+    });
   }
 
   @Override
@@ -93,24 +157,10 @@ public class GameScreen extends Screen{
     super.wasShown();
 
     this.layer.add(bg);
+    this.layer.add(coin);
     this.layer.add(backButton);
 
-    mouse().setListener(new Mouse.Adapter(){
-      @Override
-      public void onMouseUp(Mouse.ButtonEvent event){
-
-        Chis ch = new Chis(world, (float)event.x(), (float)event.y());
-        chisList.add(ch);
-      }
-    });
-
     this.layer.add(chis.layer());
-
-    for(Chis c: chisList){
-      System.out.print("add");
-      this.layer.add(c.layer());
-    }
-
 
     //============================================================
     // debug mode
@@ -139,11 +189,6 @@ public class GameScreen extends Screen{
     super.update(delta);
     chis.update(delta);
     world.step(0.033f,10,10);
-
-    for(Chis c: chisList){
-      this.layer.add(c.layer());
-      c.update(delta);
-    }
   }
 
   @Override
@@ -152,12 +197,10 @@ public class GameScreen extends Screen{
 
     chis.paint(clock);
 
-    for(Chis c: chisList){
-      c.paint(clock);
-    }
-
     if(showDebugDraw){
       debugDraw.getCanvas().clear();
+      debugDraw.getCanvas().setFillColor(Color.rgb(255, 255, 255));
+      debugDraw.getCanvas().drawText(debugStringCoin, 100f, 100f);
       world.drawDebugData();
     }
   }
