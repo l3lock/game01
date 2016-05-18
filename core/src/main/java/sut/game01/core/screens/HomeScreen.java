@@ -84,7 +84,7 @@ public class HomeScreen extends Screen{
   public void wasShown(){
     super.wasShown();
 
-    music.play();
+    // music.play();
 
     this.layer.add(bg);
     this.layer.add(nameGame);
