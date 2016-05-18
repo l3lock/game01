@@ -31,16 +31,17 @@ public class GameScreen extends Screen{
   //=======================================================
   // define for screen
 
-  private final ScreenStack ss;
-  private final ImageLayer bg;
-  private final ImageLayer level_1bg;
-  private final ImageLayer backButton;
+  private ScreenStack ss;
+  private ImageLayer bg;
+  private ImageLayer level_1bg;
+  private ImageLayer backButton;
 
   private float x ;
   private float y ;
 
   //=======================================================
   // define for character
+  private boolean destroy = false;
 
   private Chis chis;  // use chis character
   private Sword sword;
@@ -49,13 +50,13 @@ public class GameScreen extends Screen{
 
   // define item
 
-  private Arrow arrow_1;
+  private Arrow arrow;
   private static List<Arrow> arrowList;
 
   private GroupLayer groupArrow = graphics().createGroupLayer();
 
-  public void addArrow(Arrow arrow_1){
-    arrowList.add(arrow_1);
+  public void addArrow(Arrow arrow){
+    arrowList.add(arrow);
   }
 
   //=======================================================
@@ -79,6 +80,8 @@ public class GameScreen extends Screen{
   //private boolean showDebugDraw = false; // close debug mode
 
   //=======================================================
+
+  public GameScreen(){}
 
   public GameScreen(final ScreenStack ss) {
     this.ss = ss;
@@ -145,6 +148,13 @@ public class GameScreen extends Screen{
       public void beginContact(Contact contact) {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
+
+    /*    if( contact.getFixtureA().getBody() == arrow.getBody()&&
+                contact.getFixtureB().getBody() == spear.getBody()){
+          destroy = true;
+          spear.layer().destroy();
+        }
+    */
       }
 
       @Override
@@ -176,9 +186,7 @@ public class GameScreen extends Screen{
     this.layer.add(spear.layer());
     this.layer.add(crossbow.layer());
 
-    for(Arrow arrow: arrowList){
-      //
-    }
+    this.layer.add(groupArrow);
 
     //============================================================
     // debug mode
@@ -209,14 +217,19 @@ public class GameScreen extends Screen{
     chis.update(delta);
     sword.update(delta);
     spear.update(delta);
+  /*
+    if(destroy == true){
+      world.destroyBody(spear.getBody());
+    }
+  */
     crossbow.update(delta);
 
-    for(Arrow arrow_1: arrowList){
-      arrow_1.update(delta);
+    for(Arrow arrow: arrowList){
+      arrow.update(delta);
     }
 
-    for(Arrow arrow_1: arrowList){
-      groupArrow.add(arrow_1.layer());
+    for(Arrow arrow: arrowList){
+      groupArrow.add(arrow.layer());
     }
 
     world.step(0.033f,10,10);
@@ -236,7 +249,6 @@ public class GameScreen extends Screen{
     for(Arrow arrow: arrowList){
       arrow.paint(clock);
     }
-
 
     if(showDebugDraw){
       debugDraw.getCanvas().clear();
