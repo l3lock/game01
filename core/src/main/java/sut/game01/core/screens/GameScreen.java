@@ -4,7 +4,6 @@ import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.collision.Manifold;
-import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
@@ -13,10 +12,15 @@ import playn.core.*;
 import playn.core.util.Clock;
 import playn.core.CanvasImage;
 import sut.game01.core.characters.Chis;
+import sut.game01.core.characters.Crossbow;
+import sut.game01.core.characters.Spear;
+import sut.game01.core.characters.Sword;
+import sut.game01.core.item.arrow.Arrow;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,31 +33,44 @@ public class GameScreen extends Screen{
 
   private final ScreenStack ss;
   private final ImageLayer bg;
+  private final ImageLayer level_1bg;
   private final ImageLayer backButton;
-  private final ImageLayer coin;
+
+  private float x ;
+  private float y ;
 
   //=======================================================
   // define for character
 
   private Chis chis;  // use chis character
-  private List<Chis> chisList ; //  use chis in list
+  private Sword sword;
+  private Spear spear;
+  private Crossbow crossbow;
+
+  // define item
+
+  private Arrow arrow_1;
+  private static List<Arrow> arrowList;
+
+  private GroupLayer groupArrow = graphics().createGroupLayer();
+
+  public void addArrow(Arrow arrow_1){
+    arrowList.add(arrow_1);
+  }
 
   //=======================================================
   // define
 
   private int i = -1;
-  public static HashMap<Body,String> bodies = new HashMap<Body, String>();
+  public static HashMap<Object,String> bodies = new HashMap<Object, String>();
   public static int k = 0;
-  public static int point = 0;
-  public static String debugString = "";
   public static String debugStringCoin = "";
-
 
   //=======================================================
   // define for world
 
   public static float M_PER_PIXEL = 1 / 26.666667f ;
-  private static int width = 54;
+  private static int width = 162;
   private static int height = 18;
 
   private World world;
@@ -66,8 +83,15 @@ public class GameScreen extends Screen{
   public GameScreen(final ScreenStack ss) {
     this.ss = ss;
 
+    //==================================================================
+    // insert bg part
+
     Image bgImage = assets().getImage("images/bg/level_1.png");
     this.bg = graphics().createImageLayer(bgImage);
+
+    Image bg2 = assets().getImage("images/bg/level_1_bg.png");
+    this.level_1bg = graphics().createImageLayer(bg2);
+    level_1bg.setTranslation(x , y);
 
     //==================================================================
     // insert back button
@@ -82,12 +106,6 @@ public class GameScreen extends Screen{
         ss.remove(ss.top());
       }
     });
-
-    //==================================================================
-    // insert coin
-    Image coinImage = assets().getImage("images/coin.png");
-    this.coin = graphics().createImageLayer(coinImage);
-    coin.setTranslation(283,205);
 
     //==================================================================
     // define world
@@ -109,30 +127,24 @@ public class GameScreen extends Screen{
     left_wall.set(new Vec2(0, 0), new Vec2(0, height));
     ground.createFixture(left_wall, 0.0f);
 
-    // insert coin object
-    Body coinCircle = world.createBody(new BodyDef());
-    CircleShape coinCircleShape = new CircleShape();
-    coinCircleShape.setRadius(1.1f);
-    coinCircleShape.m_p.set(12f,9f);
-    coinCircle.createFixture(coinCircleShape, 0.0f);
-
     //==================================================================
     // insert chis
 
-    chis = new Chis(world, 40f, 360f);
+    chis = new Chis(world, 45f, 360f);
+    sword = new Sword(world, 400f, 360f);
+    spear = new Spear(world, 500f, 360f);
+    crossbow = new Crossbow(world ,600f, 360f);
+
+    arrowList = new ArrayList<Arrow>();
+
+    //==================================================================
+    // contract
 
     world.setContactListener(new ContactListener() {
       @Override
       public void beginContact(Contact contact) {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
-        if(bodies.get(a) != null){
-          point = point + 10;
-          debugString = bodies.get(a) + " contacted with " + bodies.get(b);
-          debugStringCoin = "Point : " + point;
-          b.applyForce(new Vec2(80f , -100f), b.getPosition());
-
-        }
       }
 
       @Override
@@ -155,12 +167,18 @@ public class GameScreen extends Screen{
   @Override
   public void wasShown(){
     super.wasShown();
-
+    this.layer.add(level_1bg);
     this.layer.add(bg);
-    this.layer.add(coin);
     this.layer.add(backButton);
 
     this.layer.add(chis.layer());
+    this.layer.add(sword.layer());
+    this.layer.add(spear.layer());
+    this.layer.add(crossbow.layer());
+
+    for(Arrow arrow: arrowList){
+      //
+    }
 
     //============================================================
     // debug mode
@@ -187,7 +205,20 @@ public class GameScreen extends Screen{
   @Override
   public void update (int delta) {
     super.update(delta);
+
     chis.update(delta);
+    sword.update(delta);
+    spear.update(delta);
+    crossbow.update(delta);
+
+    for(Arrow arrow_1: arrowList){
+      arrow_1.update(delta);
+    }
+
+    for(Arrow arrow_1: arrowList){
+      groupArrow.add(arrow_1.layer());
+    }
+
     world.step(0.033f,10,10);
   }
 
@@ -195,7 +226,17 @@ public class GameScreen extends Screen{
   public void paint(Clock clock){
     super.paint(clock);
 
+    bg.setTranslation(x , y);
+
     chis.paint(clock);
+    sword.paint(clock);
+    spear.paint(clock);
+    crossbow.paint(clock);
+
+    for(Arrow arrow: arrowList){
+      arrow.paint(clock);
+    }
+
 
     if(showDebugDraw){
       debugDraw.getCanvas().clear();
