@@ -23,26 +23,20 @@ public class Arrow {
     private float y;
 
     private Body body;
-    private int contractCheck;
-    private boolean contacted;
 
-    private Body other;
     private char direction;
 
-    private int checkArrow = 0;
-    private boolean check = true;
-    private boolean checkActive = true;
-
     public enum State{
-        IDLE
+        LEFT , RIGHT
     }
 
-    private State state = State.IDLE;
+    private State state = State.RIGHT;
 
     public Arrow(final World world, final float x_px, final float y_px, final char direction){
-        this.x = x_px ; this.y = y_px; this.direction = direction;
+        this.x = x_px ; this.y = y_px;
+        this.direction = direction;
 
-        sprite = SpriteLoader.getSprite("images/characters/Arrow/arrow_1.json");
+        sprite = SpriteLoader.getSprite("images/Arrow/arrow_1.json");
 
         sprite.addCallback(new Callback<Sprite>() {
 
@@ -71,26 +65,32 @@ public class Arrow {
     private Body initPhysicsBody(World world, float x, float y){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
-        bodyDef.position = new Vec2(0, 0);
+        bodyDef.position = new Vec2(x, y);
         Body body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(
-                20 * GameScreen.M_PER_PIXEL / 2,
-                20 * GameScreen.M_PER_PIXEL / 2);
+                70 * GameScreen.M_PER_PIXEL / 2,
+                2 * GameScreen.M_PER_PIXEL / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.3f;
-        fixtureDef.friction = 0.1f;
+        fixtureDef.density = 0.1f;
+        fixtureDef.friction = 0.8f;
+        fixtureDef.restitution = 0.35f;
 
         body.createFixture(fixtureDef);
 
         body.setLinearDamping(0.2f);
         body.setTransform(new Vec2(x, y), 0f);
 
-        if(direction == 'L') body.applyForce(new Vec2(1500f,0f), body.getPosition());
-        else if(direction == 'R') body.applyForce(new Vec2(-1500f,0f), body.getPosition());
+        if(direction == 'R'){
+            state = State.RIGHT;
+            body.applyForce(new Vec2(10f,-2f), body.getPosition());
+        }else if(direction == 'L') {
+            state =State.LEFT;
+            body.applyForce(new Vec2(-10f,-2f), body.getPosition());
+        }
 
         return body;
     }
@@ -102,13 +102,30 @@ public class Arrow {
     public Body getBody(){ return this.body; }
 
     public void update(int delta) {
-
         if (hasLoaded == false) return;
 
-        checkArrow += delta;
-        e += delta;
+        if(direction == 'R'){
+            state = State.RIGHT;
+        }else {
+            state =State.LEFT;
+        }
 
+        e += delta;
         if (e > 150) {
+            switch (state){
+                case LEFT:
+                    if (!(si >= 4 && si <= 6)){
+                        si = 4;
+                    }
+                    break;
+
+                case RIGHT:
+                    if (!(si >= 0 && si <= 2)){
+                        si = 0;
+                    }
+                    break;
+            }
+
             si++ ;
             sprite.setSprite(si);
             sprite.layer().setTranslation(
@@ -127,6 +144,8 @@ public class Arrow {
 
     }
 
+    /*
+
     public void contract(Contact contact, Chis chis){
         contacted = true;
         contractCheck = 0;
@@ -138,7 +157,9 @@ public class Arrow {
         }
     }
 
+    */
+
     public void force(){
-        body.applyForce(new Vec2(1500f,0f), body.getPosition());
+        body.applyForce(new Vec2(10f,0f), body.getPosition());
     }
 }

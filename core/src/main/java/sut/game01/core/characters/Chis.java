@@ -13,11 +13,15 @@ import sut.game01.core.screens.GameScreen;
 import sut.game01.core.spriteManage.Sprite;
 import sut.game01.core.spriteManage.SpriteLoader;
 import tripleplay.game.Screen;
+import tripleplay.game.ScreenStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Chis extends Screen {
+
+    public GameScreen game = new GameScreen();
+
     private Sprite sprite;
     private int si = 0;
     private boolean hasLoaded = false;
@@ -71,9 +75,6 @@ public class Chis extends Screen {
         bodyDef.position = new Vec2(0, 0);
         Body body = world.createBody(bodyDef);
 
-        GameScreen.bodies.put(body, "test_" + GameScreen.k);
-        GameScreen.k++ ;
-
         PolygonShape shape = new PolygonShape();
             shape.setAsBox(
                     45 * GameScreen.M_PER_PIXEL / 2,
@@ -116,6 +117,10 @@ public class Chis extends Screen {
                         else { state = State.R_IDLE; }
                         Jump(left);
                         break;
+                    case SPACE:
+                        if(left == true) { state = State.L_IDLE; }
+                        else { state = State.R_IDLE; }
+                        break;
                 }
             }
 
@@ -137,16 +142,17 @@ public class Chis extends Screen {
                         if(left == true) {
                             state = State.L_ATTK;
                             arrow_1 = new Arrow(world,
-                                    body.getPosition().x / GameScreen.M_PER_PIXEL - 15,
+                                    body.getPosition().x / GameScreen.M_PER_PIXEL - 55,
                                     body.getPosition().y / GameScreen.M_PER_PIXEL,
                                     'L');
-                        }
-                        else {
+                            game.addArrow(arrow_1);
+                        } else {
                             state = State.R_ATTK;
                             arrow_1 = new Arrow(world,
-                                    body.getPosition().x / GameScreen.M_PER_PIXEL - 15,
+                                    body.getPosition().x / GameScreen.M_PER_PIXEL + 55,
                                     body.getPosition().y / GameScreen.M_PER_PIXEL,
                                     'R');
+                            game.addArrow(arrow_1);
                         }
                         break;
                 }
@@ -220,9 +226,9 @@ public class Chis extends Screen {
     private boolean left = false;
     private void Jump(boolean left){
         if(left == true) {
-            body.applyForce(new Vec2(-15f, -400f), body.getPosition());
+            body.applyForce(new Vec2(-20f, -400f), body.getPosition());
         }else{
-            body.applyForce(new Vec2(15f, -400f), body.getPosition());
+            body.applyForce(new Vec2(20f, -400f), body.getPosition());
         }
     }
 

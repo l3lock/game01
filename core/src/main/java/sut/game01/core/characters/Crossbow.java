@@ -64,12 +64,9 @@ public class Crossbow extends Screen{
         bodyDef.position = new Vec2(0, 0);
         Body body = world.createBody(bodyDef);
 
-        GameScreen.bodies.put(body, "test_" + GameScreen.k);
-        GameScreen.k++ ;
-
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(
-                70 * GameScreen.M_PER_PIXEL / 2,
+                45 * GameScreen.M_PER_PIXEL / 2,
                 70 * GameScreen.M_PER_PIXEL / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -78,7 +75,7 @@ public class Crossbow extends Screen{
         fixtureDef.friction = 0.1f;
 
         body.createFixture(fixtureDef);
-
+        body.setFixedRotation(true);
         body.setLinearDamping(0.2f);
         body.setTransform(new Vec2(x, y), 0f);
 
@@ -148,7 +145,7 @@ public class Crossbow extends Screen{
         if (!hasLoaded) return;
 
         sprite.layer().setTranslation(
-                (body.getPosition().x / GameScreen.M_PER_PIXEL) - 10,
+                (body.getPosition().x / GameScreen.M_PER_PIXEL),
                 body.getPosition().y / GameScreen.M_PER_PIXEL);
 
         // sprite.layer().setRotation(body.getAngle());

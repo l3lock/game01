@@ -66,7 +66,7 @@ public class Sword extends Screen{
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(
-                70 * GameScreen.M_PER_PIXEL / 2,
+                45 * GameScreen.M_PER_PIXEL / 2,
                 70 * GameScreen.M_PER_PIXEL / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -75,7 +75,7 @@ public class Sword extends Screen{
         fixtureDef.friction = 0.1f;
 
         body.createFixture(fixtureDef);
-
+        body.setFixedRotation(true);
         body.setLinearDamping(0.2f);
         body.setTransform(new Vec2(x, y), 0f);
 
