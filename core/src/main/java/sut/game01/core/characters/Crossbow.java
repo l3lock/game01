@@ -85,6 +85,7 @@ public class Crossbow extends Screen{
     public Layer layer() {
         return sprite.layer();
     }
+    public Body getBody(){ return this.body; }
 
     public void update(int delta) {
         if(hasLoaded == false) return;

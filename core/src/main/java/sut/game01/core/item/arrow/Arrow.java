@@ -1,5 +1,8 @@
 package sut.game01.core.item.arrow;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
@@ -30,7 +33,7 @@ public class Arrow {
         LEFT , RIGHT
     }
 
-    private State state = State.RIGHT;
+    private State state ;
 
     public Arrow(final World world, final float x_px, final float y_px, final char direction){
         this.x = x_px ; this.y = y_px;
@@ -111,11 +114,11 @@ public class Arrow {
         }
 
         e += delta;
-        if (e > 150) {
+        if (e > 250) {
             switch (state){
                 case LEFT:
-                    if (!(si >= 4 && si <= 6)){
-                        si = 4;
+                    if (!(si >= 5 && si <= 6)){
+                        si = 5;
                     }
                     break;
 
@@ -138,26 +141,13 @@ public class Arrow {
     public void paint(Clock clock){
         if(!hasLoaded) return;
 
+        sprite.layer().setRotation(body.getAngle());
+
         sprite.layer().setTranslation(
                 (body.getPosition().x / GameScreen.M_PER_PIXEL),
                 body.getPosition().y / GameScreen.M_PER_PIXEL);
 
     }
-
-    /*
-
-    public void contract(Contact contact, Chis chis){
-        contacted = true;
-        contractCheck = 0;
-
-        if (contact.getFixtureA().getBody() == body){
-            other = contact.getFixtureB().getBody();
-        } else {
-            other = contact.getFixtureA().getBody();
-        }
-    }
-
-    */
 
     public void force(){
         body.applyForce(new Vec2(10f,0f), body.getPosition());
