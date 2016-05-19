@@ -43,6 +43,12 @@ public class GameScreen extends Screen{
   // define for character
   private boolean destroy = false;
 
+  public enum Character {
+    IDLE,SWORD, SPEAR, CROSSBOW
+  }
+
+  private Character character;
+
   private Chis chis;  // use chis character
   private Sword sword;
   private Spear spear;
@@ -50,6 +56,7 @@ public class GameScreen extends Screen{
 
   // define item
 
+  private int shoot = 0;
   private Arrow arrow;
   private static List<Arrow> arrowList;
 
@@ -139,6 +146,21 @@ public class GameScreen extends Screen{
     crossbow = new Crossbow(world ,600f, 360f);
 
     arrowList = new ArrayList<Arrow>();
+  }
+
+  @Override
+  public void wasShown(){
+    super.wasShown();
+    this.layer.add(level_1bg);
+    this.layer.add(bg);
+    this.layer.add(backButton);
+
+    this.layer.add(chis.layer());
+    this.layer.add(sword.layer());
+    this.layer.add(spear.layer());
+    this.layer.add(crossbow.layer());
+
+    this.layer.add(groupArrow);
 
     //==================================================================
     // contract
@@ -149,12 +171,31 @@ public class GameScreen extends Screen{
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
-    /*    if( contact.getFixtureA().getBody() == arrow.getBody()&&
-                contact.getFixtureB().getBody() == spear.getBody()){
-          destroy = true;
-          spear.layer().destroy();
+        for(Arrow arrow: arrowList){
+
+          if( contact.getFixtureA().getBody() == arrow.getBody()||
+                  contact.getFixtureB().getBody() == arrow.getBody()){
+          }
+
+          if( contact.getFixtureA().getBody() == sword.getBody()||
+                  contact.getFixtureB().getBody() == sword.getBody()){
+            character = Character.SWORD ; destroy = true;
+            sword.layer().destroy();
+          }
+
+          else if( contact.getFixtureA().getBody() == spear.getBody()||
+                  contact.getFixtureB().getBody() == spear.getBody()){
+            character = Character.SPEAR ; destroy = true;
+            spear.layer().destroy();
+          }
+
+          else if( contact.getFixtureA().getBody() == crossbow.getBody()||
+                  contact.getFixtureB().getBody() == crossbow.getBody()){
+            character = Character.CROSSBOW ; destroy = true;
+            crossbow.layer().destroy();
+          }
         }
-    */
+
       }
 
       @Override
@@ -172,21 +213,6 @@ public class GameScreen extends Screen{
 
       }
     });
-  }
-
-  @Override
-  public void wasShown(){
-    super.wasShown();
-    this.layer.add(level_1bg);
-    this.layer.add(bg);
-    this.layer.add(backButton);
-
-    this.layer.add(chis.layer());
-    this.layer.add(sword.layer());
-    this.layer.add(spear.layer());
-    this.layer.add(crossbow.layer());
-
-    this.layer.add(groupArrow);
 
     //============================================================
     // debug mode
@@ -217,11 +243,16 @@ public class GameScreen extends Screen{
     chis.update(delta);
     sword.update(delta);
     spear.update(delta);
-  /*
+
     if(destroy == true){
-      world.destroyBody(spear.getBody());
+      switch (character){
+        case IDLE: world.destroyBody(arrow.getBody()); break;
+        case SWORD: world.destroyBody(sword.getBody()); break;
+        case SPEAR: world.destroyBody(spear.getBody()); break;
+        case CROSSBOW: world.destroyBody(crossbow.getBody()); break;
+      }
     }
-  */
+
     crossbow.update(delta);
 
     for(Arrow arrow: arrowList){
