@@ -85,6 +85,8 @@ public class Chis extends Screen {
         fixtureDef.density = 0.3f;
         fixtureDef.friction = 0.1f;
 
+        fixtureDef.filter.groupIndex = -1; // can walk tro
+
         body.createFixture(fixtureDef);
 
         body.setFixedRotation(true);
@@ -226,17 +228,21 @@ public class Chis extends Screen {
     private boolean left = false;
     private void Jump(boolean left){
         if(left == true) {
-            body.applyForce(new Vec2(-20f, -400f), body.getPosition());
+            body.applyForce(new Vec2(0f, -400f), body.getPosition());
+            game.x += 1.5f;
         }else{
-            body.applyForce(new Vec2(20f, -400f), body.getPosition());
+            body.applyForce(new Vec2(0f, -400f), body.getPosition());
+            game.x -= 1.5f;
         }
     }
 
-    private void Walk(boolean left){
+    public void Walk(boolean left){
         if(left == true) {
-            body.applyForce(new Vec2(-3f, 0f), body.getPosition());
+            //body.applyForce(new Vec2(-3f, 0f), body.getPosition());
+            game.x += 1.5f;
         }else{
-            body.applyForce(new Vec2(3f, 0f), body.getPosition());
+            //body.applyForce(new Vec2(3f, 0f), body.getPosition());
+            game.x -= 1.5f;
         }
     }
 }

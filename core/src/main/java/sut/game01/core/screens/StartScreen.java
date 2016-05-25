@@ -44,7 +44,7 @@ public class StartScreen extends Screen {
     newButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(gameScreen);
+        ss.push(new GameScreen(ss));
       }
     });
 
@@ -57,7 +57,7 @@ public class StartScreen extends Screen {
     loadButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(gameScreen);
+        ss.push(new GameScreen(ss));
       }
     });
 
@@ -105,7 +105,7 @@ public class StartScreen extends Screen {
       @Override
       public void onKeyUp(Keyboard.Event event) {
         if(event.key() == Key.ENTER) {
-          ss.push(gameScreen);
+          ss.push(new GameScreen(ss));
         }
       }
     });
