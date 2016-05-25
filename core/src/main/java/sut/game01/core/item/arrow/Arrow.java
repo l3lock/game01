@@ -82,6 +82,8 @@ public class Arrow {
         fixtureDef.friction = 0.8f;
         fixtureDef.restitution = 0.35f;
 
+        fixtureDef.filter.groupIndex = -1;
+
         body.createFixture(fixtureDef);
 
         body.setLinearDamping(0.2f);
@@ -89,10 +91,10 @@ public class Arrow {
 
         if(direction == 'R'){
             state = State.RIGHT;
-            body.applyForce(new Vec2(10f,-2f), body.getPosition());
+            body.applyForce(new Vec2(10f,-2.5f), body.getPosition());
         }else if(direction == 'L') {
             state =State.LEFT;
-            body.applyForce(new Vec2(-10f,-2f), body.getPosition());
+            body.applyForce(new Vec2(-10f,-2.5f), body.getPosition());
         }
 
         return body;
@@ -149,7 +151,10 @@ public class Arrow {
 
     }
 
-    public void force(){
-        body.applyForce(new Vec2(10f,0f), body.getPosition());
+    private boolean checkContact = false;
+    public void ContactCheck(Contact contact){
+        checkContact = true;
+        sprite.layer().setVisible(false);
     }
+
 }

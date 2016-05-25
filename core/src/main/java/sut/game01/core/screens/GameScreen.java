@@ -36,15 +36,15 @@ public class GameScreen extends Screen{
   private ImageLayer level_1bg;
   private ImageLayer backButton;
 
-  private float x ;
-  private float y ;
+  public static float x ;
+  public static float y ;
 
   //=======================================================
   // define for character
   private boolean destroy = false;
 
   public enum Character {
-    IDLE,SWORD, SPEAR, CROSSBOW
+    SWORD, SPEAR, CROSSBOW
   }
 
   private Character character;
@@ -86,7 +86,7 @@ public class GameScreen extends Screen{
   private boolean showDebugDraw = true; // open debug mode
   //private boolean showDebugDraw = false; // close debug mode
 
-  //=======================================================
+  //===================================================================
 
   public GameScreen(){}
 
@@ -110,13 +110,6 @@ public class GameScreen extends Screen{
     this.backButton = graphics().createImageLayer(backImage);
     backButton.setTranslation(10,405);
 
-    backButton.addListener(new Mouse.LayerAdapter(){
-      @Override
-      public void onMouseUp(Mouse.ButtonEvent event){
-        ss.remove(ss.top());
-      }
-    });
-
     //==================================================================
     // define world
 
@@ -132,6 +125,7 @@ public class GameScreen extends Screen{
     EdgeShape groundShape = new EdgeShape();
     groundShape.set(new Vec2(0, height - 3), new Vec2(width, height - 3));
     ground.createFixture(groundShape, 0.0f);
+    bodies.put(ground,"ground");
 
     EdgeShape left_wall = new EdgeShape();
     left_wall.set(new Vec2(0, 0), new Vec2(0, height));
@@ -141,9 +135,16 @@ public class GameScreen extends Screen{
     // insert chis
 
     chis = new Chis(world, 45f, 360f);
+    //bodies.put(chis,"Chis");
+
     sword = new Sword(world, 400f, 360f);
+    //bodies.put(sword,"sword_");
+
     spear = new Spear(world, 500f, 360f);
+    //bodies.put(spear,"spear_");
+
     crossbow = new Crossbow(world ,600f, 360f);
+    //bodies.put(crossbow,"crossbow_");
 
     arrowList = new ArrayList<Arrow>();
   }
@@ -163,6 +164,17 @@ public class GameScreen extends Screen{
     this.layer.add(groupArrow);
 
     //==================================================================
+    // back button event
+
+    backButton.addListener(new Mouse.LayerAdapter(){
+      @Override
+      public void onMouseUp(Mouse.ButtonEvent event){
+        ss.remove(ss.top());
+        DestroyAll();
+      }
+    });
+
+    //==================================================================
     // contract
 
     world.setContactListener(new ContactListener() {
@@ -173,26 +185,26 @@ public class GameScreen extends Screen{
 
         for(Arrow arrow: arrowList){
 
-          if( contact.getFixtureA().getBody() == arrow.getBody()||
-                  contact.getFixtureB().getBody() == arrow.getBody()){
-          }
-
-          if( contact.getFixtureA().getBody() == sword.getBody()||
-                  contact.getFixtureB().getBody() == sword.getBody()){
+          if( a == sword.getBody()&& b == arrow.getBody()){
             character = Character.SWORD ; destroy = true;
             sword.layer().destroy();
+            //arrow.ContactCheck(contact);
           }
 
-          else if( contact.getFixtureA().getBody() == spear.getBody()||
-                  contact.getFixtureB().getBody() == spear.getBody()){
+          else if( a == spear.getBody()&& b == arrow.getBody()){
             character = Character.SPEAR ; destroy = true;
             spear.layer().destroy();
+            //arrow.ContactCheck(contact);
           }
 
-          else if( contact.getFixtureA().getBody() == crossbow.getBody()||
-                  contact.getFixtureB().getBody() == crossbow.getBody()){
+          else if( a == crossbow.getBody()&& b == arrow.getBody()){
             character = Character.CROSSBOW ; destroy = true;
             crossbow.layer().destroy();
+            //arrow.ContactCheck(contact);
+          }
+
+          else if( bodies.get(a) == "ground" && b == arrow.getBody()){
+            arrow.ContactCheck(contact);
           }
         }
 
@@ -243,17 +255,17 @@ public class GameScreen extends Screen{
     chis.update(delta);
     sword.update(delta);
     spear.update(delta);
+    crossbow.update(delta);
+    bg.setTranslation(x,0);
 
     if(destroy == true){
       switch (character){
-        case IDLE: world.destroyBody(arrow.getBody()); break;
+
         case SWORD: world.destroyBody(sword.getBody()); break;
         case SPEAR: world.destroyBody(spear.getBody()); break;
         case CROSSBOW: world.destroyBody(crossbow.getBody()); break;
       }
     }
-
-    crossbow.update(delta);
 
     for(Arrow arrow: arrowList){
       arrow.update(delta);
@@ -284,8 +296,20 @@ public class GameScreen extends Screen{
     if(showDebugDraw){
       debugDraw.getCanvas().clear();
       debugDraw.getCanvas().setFillColor(Color.rgb(255, 255, 255));
-      debugDraw.getCanvas().drawText(debugStringCoin, 100f, 100f);
+      //debugDraw.getCanvas().drawText(debugStringCoin, 100f, 100f);
       world.drawDebugData();
     }
   }
+
+  private void DestroyAll(){
+/*
+    debugDraw.getCanvas().clear();
+
+    world.destroyBody(chis.getBody());      chis.layer().destroy();
+    world.destroyBody(sword.getBody());     sword.layer().destroy();
+    world.destroyBody(spear.getBody());     spear.layer().destroy();
+    world.destroyBody(crossbow.getBody());  crossbow.layer().destroy();
+*/
+  }
+
 }
