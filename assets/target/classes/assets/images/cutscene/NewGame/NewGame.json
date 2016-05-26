@@ -1,0 +1,9 @@
+{
+  "urls": ["images/cutscene/NewGame/NewGame.png"],
+  "sprites": [
+	{"id": "scene_0", "url": 0, "x":16,"y":16,"w":640,"h":480},
+	{"id": "scene_1", "url": 0, "x":688,"y":16,"w":640,"h":480},
+	{"id": "scene_2", "url": 0, "x":16,"y":528,"w":640,"h":480},
+	{"id": "scene_3", "url": 0, "x":688,"y":528,"w":640,"h":480}
+  ]
+}

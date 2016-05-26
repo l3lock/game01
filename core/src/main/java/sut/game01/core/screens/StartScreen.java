@@ -1,6 +1,7 @@
 package sut.game01.core.screens;
 
 import playn.core.*;
+import sut.game01.core.cutscene.NewGame;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
@@ -14,6 +15,7 @@ public class StartScreen extends Screen {
   private ScreenStack ss;  
 
   private final GameScreen gameScreen;
+  private NewGame newGame;
   private final Setting setting;
 
   // insert image layer
@@ -44,7 +46,7 @@ public class StartScreen extends Screen {
     newButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(new GameScreen(ss));
+        ss.push(new NewGame(ss));
       }
     });
 
@@ -105,9 +107,10 @@ public class StartScreen extends Screen {
       @Override
       public void onKeyUp(Keyboard.Event event) {
         if(event.key() == Key.ENTER) {
-          ss.push(new GameScreen(ss));
+          ss.push(new NewGame(ss));
         }
       }
     });
   }
+
 }
