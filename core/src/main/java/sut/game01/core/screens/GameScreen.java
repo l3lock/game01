@@ -71,8 +71,7 @@ public class GameScreen extends Screen{
 
   private int i = -1;
   public static HashMap<Object,String> bodies = new HashMap<Object, String>();
-  public static int k = 0;
-  public static String debugStringCoin = "";
+  public static int enemies = 3;
 
   //=======================================================
   // define for world
@@ -134,7 +133,7 @@ public class GameScreen extends Screen{
     //==================================================================
     // insert chis
 
-    chis = new Chis(world, 45f, 360f);
+    chis = new Chis(world, 50f, 360f);
     //bodies.put(chis,"Chis");
 
     sword = new Sword(world, 400f, 360f);
@@ -170,7 +169,8 @@ public class GameScreen extends Screen{
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
         ss.remove(ss.top());
-        DestroyAll();
+        ss.remove(ss.top());
+        enemies = 3;
       }
     });
 
@@ -188,19 +188,37 @@ public class GameScreen extends Screen{
           if( a == sword.getBody()&& b == arrow.getBody()){
             character = Character.SWORD ; destroy = true;
             sword.layer().destroy();
-            //arrow.ContactCheck(contact);
+            enemies--;
           }
 
-          else if( a == spear.getBody()&& b == arrow.getBody()){
+          else if( b == sword.getBody()&& a == arrow.getBody()){
+            character = Character.SWORD ; destroy = true;
+            sword.layer().destroy();
+            enemies--;
+          }
+
+          if( a == spear.getBody()&& b == arrow.getBody()){
             character = Character.SPEAR ; destroy = true;
             spear.layer().destroy();
-            //arrow.ContactCheck(contact);
+            enemies--;
           }
 
-          else if( a == crossbow.getBody()&& b == arrow.getBody()){
+          else if( b == spear.getBody()&& a == arrow.getBody()){
+            character = Character.SPEAR ; destroy = true;
+            spear.layer().destroy();
+            enemies--;
+          }
+
+          if( a == crossbow.getBody()&& b == arrow.getBody()){
             character = Character.CROSSBOW ; destroy = true;
             crossbow.layer().destroy();
-            //arrow.ContactCheck(contact);
+            enemies--;
+          }
+
+          else if( b == crossbow.getBody()&& a == arrow.getBody()){
+            character = Character.CROSSBOW ; destroy = true;
+            crossbow.layer().destroy();
+            enemies--;
           }
 
           else if( bodies.get(a) == "ground" && b == arrow.getBody()){
@@ -296,20 +314,15 @@ public class GameScreen extends Screen{
     if(showDebugDraw){
       debugDraw.getCanvas().clear();
       debugDraw.getCanvas().setFillColor(Color.rgb(255, 255, 255));
-      //debugDraw.getCanvas().drawText(debugStringCoin, 100f, 100f);
+
+      //============================================================
+      // show enemies left
+      debugDraw.getCanvas().drawText(
+              String.valueOf("ENEMIES" + " " + " LEFT = " + enemies ),
+              445, 30);
+
       world.drawDebugData();
     }
-  }
-
-  private void DestroyAll(){
-/*
-    debugDraw.getCanvas().clear();
-
-    world.destroyBody(chis.getBody());      chis.layer().destroy();
-    world.destroyBody(sword.getBody());     sword.layer().destroy();
-    world.destroyBody(spear.getBody());     spear.layer().destroy();
-    world.destroyBody(crossbow.getBody());  crossbow.layer().destroy();
-*/
   }
 
 }

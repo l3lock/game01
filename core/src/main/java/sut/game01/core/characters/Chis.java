@@ -111,14 +111,17 @@ public class Chis extends Screen {
                     case LEFT:
                         left = true;
                         state = State.L_IDLE; break;
+
                     case RIGHT:
                         left = false;
                         state = State.R_IDLE; break;
+
                     case UP:
                         if(left == true) { state = State.L_IDLE; }
                         else { state = State.R_IDLE; }
                         Jump(left);
                         break;
+
                     case SPACE:
                         if(left == true) { state = State.L_IDLE; }
                         else { state = State.R_IDLE; }
@@ -132,13 +135,16 @@ public class Chis extends Screen {
                     case LEFT:
                         left = true;
                         state = State.L_WALK; break;
+
                     case RIGHT:
                         left = false;
                         state = State.R_WALK; break;
+
                     case DOWN:
                         if(left == true) { state = State.L_IDLE; }
                         else { state = State.R_IDLE; }
                         break;
+
                     case SPACE:
                         Arrow arrow_1;
                         if(left == true) {
@@ -229,20 +235,20 @@ public class Chis extends Screen {
     private void Jump(boolean left){
         if(left == true) {
             body.applyForce(new Vec2(0f, -400f), body.getPosition());
-            game.x += 1.5f;
+            //game.x += 1.5f;
         }else{
             body.applyForce(new Vec2(0f, -400f), body.getPosition());
-            game.x -= 1.5f;
+            //game.x -= 1.5f;
         }
     }
 
     public void Walk(boolean left){
         if(left == true) {
-            //body.applyForce(new Vec2(-3f, 0f), body.getPosition());
-            game.x += 1.5f;
+            body.applyForce(new Vec2(-3f, 0f), body.getPosition());
+            //game.x += 1.5f;
         }else{
-            //body.applyForce(new Vec2(3f, 0f), body.getPosition());
-            game.x -= 1.5f;
+            body.applyForce(new Vec2(3f, 0f), body.getPosition());
+            //game.x -= 1.5f;
         }
     }
 }
