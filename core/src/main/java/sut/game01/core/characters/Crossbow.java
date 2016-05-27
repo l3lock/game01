@@ -74,6 +74,8 @@ public class Crossbow extends Screen{
         fixtureDef.density = 0.4f;
         fixtureDef.friction = 0.1f;
 
+        fixtureDef.filter.groupIndex = -2;
+
         body.createFixture(fixtureDef);
         body.setFixedRotation(true);
         body.setLinearDamping(0.2f);
@@ -153,21 +155,24 @@ public class Crossbow extends Screen{
 
         switch (state){
             case L_WALK:
-                left = true; Walk(left);
+                left = true; Walk();
                 break;
 
             case R_WALK:
-                left = false; Walk(left);
+                left = false; Walk();
                 break;
         }
     }
 
     private boolean left = true;
-    private void Walk(boolean left){
-        if(left == true) {
-            body.applyForce(new Vec2(-5f, 0f), body.getPosition());
-        }else{
-            body.applyForce(new Vec2(5f, 0f), body.getPosition());
+    private float temp = -1f;
+    private void Walk(){
+        if(body.getPosition().x  >= 140f) {
+            temp = -1f; state = State.L_WALK;
         }
+        else if (body.getPosition().x <= 10f) {
+            temp = 1f; state = State.R_WALK;
+        }
+        body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());
     }
 }

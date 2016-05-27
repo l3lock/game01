@@ -1,8 +1,7 @@
 package sut.game01.core.cutscene;
 
 import org.jbox2d.dynamics.World;
-import playn.core.Image;
-import playn.core.ImageLayer;
+import playn.core.*;
 import playn.core.util.Clock;
 import sut.game01.core.screens.GameScreen;
 import tripleplay.game.Screen;
@@ -58,6 +57,15 @@ public class NewGame extends Screen {
         super.wasShown();
 
         this.layer.add(cs1);
+
+        PlayN.keyboard().setListener(new Keyboard.Adapter() {
+            @Override
+            public void onKeyUp(Keyboard.Event event) {
+                if(event.key() == Key.ESCAPE) {
+                    ss.push(new GameScreen(ss));
+                }
+            }
+        });
     }
 
     @Override
@@ -66,12 +74,11 @@ public class NewGame extends Screen {
 
         time += delta;
 
-        if(time > 2500 * 1 ){this.layer.add(cs2); }
-        if(time > 2500 * 2 ){this.layer.add(cs3); }
-        if(time > 2500 * 3 ){this.layer.add(cs4); }
-        if(time > 2500 * 4 ){ss.push(new GameScreen(ss)); }
+        if(time > 2200 * 1 ){this.layer.add(cs2); }
+        if(time > 2200 * 2 ){this.layer.add(cs3); }
+        if(time > 2200 * 3 ){this.layer.add(cs4); }
+        if(time > 2200 * 4 ){ss.push(new GameScreen(ss)); }
 
-        System.out.println(time);
     }
 
     @Override

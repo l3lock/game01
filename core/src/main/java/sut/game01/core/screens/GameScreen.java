@@ -293,6 +293,11 @@ public class GameScreen extends Screen{
       groupArrow.add(arrow.layer());
     }
 
+    //============================================================
+    // screen moving
+    if(x < 0 ){ bg.setTranslation(x,0);} else { x = 0; }
+    if(x <= -799) x = -799;
+
     world.step(0.033f,10,10);
   }
 

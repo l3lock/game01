@@ -234,21 +234,21 @@ public class Chis extends Screen {
     private boolean left = false;
     private void Jump(boolean left){
         if(left == true) {
-            body.applyForce(new Vec2(0f, -400f), body.getPosition());
-            //game.x += 1.5f;
+            body.applyForce(new Vec2(-2f, -400f), body.getPosition());
+            game.x += 0.5f;
         }else{
-            body.applyForce(new Vec2(0f, -400f), body.getPosition());
-            //game.x -= 1.5f;
+            body.applyForce(new Vec2(2f, -400f), body.getPosition());
+            game.x -= 0.5f;
         }
     }
 
     public void Walk(boolean left){
         if(left == true) {
-            body.applyForce(new Vec2(-3f, 0f), body.getPosition());
-            //game.x += 1.5f;
+            body.applyForce(new Vec2(-1f, 0f), body.getPosition());
+            game.x += 1f;
         }else{
-            body.applyForce(new Vec2(3f, 0f), body.getPosition());
-            //game.x -= 1.5f;
+            body.applyForce(new Vec2(1f, 0f), body.getPosition());
+            game.x -= 1f;
         }
     }
 }
