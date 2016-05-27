@@ -59,6 +59,7 @@ public class GameScreen extends Screen{
   private int shoot = 0;
   private Arrow arrow;
   private static List<Arrow> arrowList;
+  private static List<Arrow> destroyArrow;
 
   private GroupLayer groupArrow = graphics().createGroupLayer();
 
@@ -105,7 +106,7 @@ public class GameScreen extends Screen{
     //==================================================================
     // insert back button
 
-    Image backImage = assets().getImage("images/button/backBut.png");
+    Image backImage = assets().getImage("images/button/backBut2.png");
     this.backButton = graphics().createImageLayer(backImage);
     backButton.setTranslation(10,405);
 
@@ -126,6 +127,10 @@ public class GameScreen extends Screen{
     ground.createFixture(groundShape, 0.0f);
     bodies.put(ground,"ground");
 
+    EdgeShape groundTop = new EdgeShape();
+    groundTop.set(new Vec2(-width, height - 15), new Vec2(width, height - 15));
+    ground.createFixture(groundTop, 0.0f);
+
     EdgeShape left_wall = new EdgeShape();
     left_wall.set(new Vec2(0, 0), new Vec2(0, height));
     ground.createFixture(left_wall, 0.0f);
@@ -145,7 +150,8 @@ public class GameScreen extends Screen{
     crossbow = new Crossbow(world ,600f, 360f);
     //bodies.put(crossbow,"crossbow_");
 
-    arrowList = new ArrayList<Arrow>();
+    arrowList     = new ArrayList<Arrow>();
+    destroyArrow  = new ArrayList<Arrow>();
   }
 
   @Override
@@ -188,41 +194,53 @@ public class GameScreen extends Screen{
           if( a == sword.getBody()&& b == arrow.getBody()){
             character = Character.SWORD ; destroy = true;
             sword.layer().destroy();
+            destroyArrow.add(arrow);
             enemies--;
           }
 
           else if( b == sword.getBody()&& a == arrow.getBody()){
             character = Character.SWORD ; destroy = true;
             sword.layer().destroy();
+            destroyArrow.add(arrow);
             enemies--;
           }
 
           if( a == spear.getBody()&& b == arrow.getBody()){
             character = Character.SPEAR ; destroy = true;
             spear.layer().destroy();
+            destroyArrow.add(arrow);
             enemies--;
           }
 
           else if( b == spear.getBody()&& a == arrow.getBody()){
             character = Character.SPEAR ; destroy = true;
             spear.layer().destroy();
+            destroyArrow.add(arrow);
             enemies--;
           }
 
           if( a == crossbow.getBody()&& b == arrow.getBody()){
             character = Character.CROSSBOW ; destroy = true;
             crossbow.layer().destroy();
+            destroyArrow.add(arrow);
             enemies--;
           }
 
           else if( b == crossbow.getBody()&& a == arrow.getBody()){
             character = Character.CROSSBOW ; destroy = true;
             crossbow.layer().destroy();
+            destroyArrow.add(arrow);
             enemies--;
           }
 
           else if( bodies.get(a) == "ground" && b == arrow.getBody()){
             arrow.ContactCheck(contact);
+            destroyArrow.add(arrow);
+          }
+
+          else if( bodies.get(b) == "ground" && a == arrow.getBody()){
+            arrow.ContactCheck(contact);
+            destroyArrow.add(arrow);
           }
         }
 
@@ -291,6 +309,14 @@ public class GameScreen extends Screen{
 
     for(Arrow arrow: arrowList){
       groupArrow.add(arrow.layer());
+    }
+
+    // delete arrow body
+    while(!destroyArrow.isEmpty()) {
+      destroyArrow.get(0).getBody().setActive(false);
+      arrowList.get(0).layer().destroy();
+      arrowList.remove(0);
+      world.destroyBody(destroyArrow.remove(0).getBody());
     }
 
     //============================================================
