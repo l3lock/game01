@@ -74,7 +74,7 @@ public class Arrow {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(
                 70 * GameScreen.M_PER_PIXEL / 2,
-                2 * GameScreen.M_PER_PIXEL / 2);
+                1 * GameScreen.M_PER_PIXEL / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -91,10 +91,10 @@ public class Arrow {
 
         if(direction == 'R'){
             state = State.RIGHT;
-            body.applyForce(new Vec2(10f,-2.5f), body.getPosition());
+            body.applyForce(new Vec2(4f,-1.5f), body.getPosition());
         }else if(direction == 'L') {
             state =State.LEFT;
-            body.applyForce(new Vec2(-10f,-2.5f), body.getPosition());
+            body.applyForce(new Vec2(-4f,-1.5f), body.getPosition());
         }
 
         return body;

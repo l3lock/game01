@@ -170,7 +170,7 @@ public class Sword extends Screen{
     private boolean left = true;
     private float temp = -1f;
     private void Walk(){
-        if(body.getPosition().x  >= 140f) {
+        if(body.getPosition().x  >= 40f) {
             temp = -1f; state = State.L_WALK;
         }
         else if (body.getPosition().x <= 10f) {
