@@ -15,8 +15,9 @@ public class StartScreen extends Screen {
   private ScreenStack ss;  
 
   private final GameScreen gameScreen;
-  private NewGame newGame;
+  private final NewGame newGame;
   private final Setting setting;
+  private final LoadScreen loadScreen;
 
   // insert image layer
   private ImageLayer bg;
@@ -29,8 +30,10 @@ public class StartScreen extends Screen {
     float x = 180f, y = 110.0f;
 
     this.ss = ss;
-    this.gameScreen = new GameScreen(ss);
     this.setting = new Setting(ss);
+    this.newGame = new NewGame(ss);
+    this.gameScreen = new GameScreen(ss);
+    this.loadScreen = new LoadScreen(ss);
 
     //==================================================================
     // insert bg
@@ -59,7 +62,7 @@ public class StartScreen extends Screen {
     loadButton.addListener(new Mouse.LayerAdapter(){
       @Override
       public void onMouseUp(Mouse.ButtonEvent event){
-        ss.push(new GameScreen(ss));
+        ss.push(loadScreen);
       }
     });
 
