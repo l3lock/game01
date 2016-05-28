@@ -67,9 +67,6 @@ public class Setting extends Screen {
         this.layer.add(bg);
         this.layer.add(backButton);
         this.layer.add(sound);
-     //   this.layer.add(sound2);
-
-
     }
 
     private int click1 = 0;
