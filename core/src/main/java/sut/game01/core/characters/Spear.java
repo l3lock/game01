@@ -24,7 +24,7 @@ public class Spear extends Screen{
         ATTK
     }
 
-    private State state = State.L_IDLE;
+    private State state = State.L_WALK;
 
     private Body body;
 
@@ -120,14 +120,14 @@ public class Spear extends Screen{
                     break;
 
                 case R_WALK:
-                    if (!(si >= 18 && si <= 20)){
-                        si = 18;
+                    if (!(si >= 19 && si <= 21)){
+                        si = 19;
                     }
                     break;
 
                 case L_WALK:
-                    if (!(si >= 21 && si <= 23)){
-                        si = 21;
+                    if (!(si >= 23 && si <= 25)){
+                        si = 23;
                     }
                     break;
 
@@ -167,10 +167,10 @@ public class Spear extends Screen{
     private boolean left = true;
     private float temp = -1f;
     private void Walk(){
-        if(body.getPosition().x  >= 140f) {
+        if(body.getPosition().x  >= 30f) {
             temp = -1f; state = State.L_WALK;
         }
-        else if (body.getPosition().x <= 10f) {
+        else if (body.getPosition().x <= 15f) {
             temp = 1f; state = State.R_WALK;
         }
         body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());

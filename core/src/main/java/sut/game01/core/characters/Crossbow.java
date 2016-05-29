@@ -24,7 +24,7 @@ public class Crossbow extends Screen{
         ATTK
     }
 
-    private State state = State.L_IDLE;
+    private State state = State.R_WALK;
 
     private Body body;
 
@@ -167,10 +167,10 @@ public class Crossbow extends Screen{
     private boolean left = true;
     private float temp = -1f;
     private void Walk(){
-        if(body.getPosition().x  >= 140f) {
+        if(body.getPosition().x  >= 30f) {
             temp = -1f; state = State.L_WALK;
         }
-        else if (body.getPosition().x <= 10f) {
+        else if (body.getPosition().x <= 15f) {
             temp = 1f; state = State.R_WALK;
         }
         body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());
