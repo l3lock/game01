@@ -147,7 +147,7 @@ public class GameScreen extends Screen{
     spear = new Spear(world, 500f, 360f);
     //bodies.put(spear,"spear_");
 
-    crossbow = new Crossbow(world ,600f, 360f);
+    crossbow = new Crossbow(world ,630f, 360f);
     //bodies.put(crossbow,"crossbow_");
 
     arrowList     = new ArrayList<Arrow>();
@@ -303,6 +303,9 @@ public class GameScreen extends Screen{
       }
     }
 
+    //============================================================
+    // insert & delete Arrow
+
     for(Arrow arrow: arrowList){
       arrow.update(delta);
     }
@@ -318,6 +321,10 @@ public class GameScreen extends Screen{
       arrowList.remove(0);
       world.destroyBody(destroyArrow.remove(0).getBody());
     }
+
+    //============================================================
+    // check side
+    //sword.side();
 
     //============================================================
     // screen moving
