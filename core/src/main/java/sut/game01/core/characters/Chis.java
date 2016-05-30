@@ -10,6 +10,7 @@ import playn.core.util.Callback;
 import playn.core.util.Clock;
 import sut.game01.core.item.arrow.Arrow;
 import sut.game01.core.screens.GameScreen;
+import sut.game01.core.screens.GameScreen2;
 import sut.game01.core.spriteManage.Sprite;
 import sut.game01.core.spriteManage.SpriteLoader;
 import tripleplay.game.Screen;
@@ -21,6 +22,7 @@ import java.util.List;
 public class Chis extends Screen {
 
     public GameScreen game = new GameScreen();
+    public GameScreen2 game2 = new GameScreen2();
 
     private Sprite sprite;
     private int si = 0;
@@ -154,6 +156,7 @@ public class Chis extends Screen {
                                     body.getPosition().y / GameScreen.M_PER_PIXEL,
                                     'L');
                             game.addArrow(arrow_1);
+                            game2.addArrow(arrow_1);
                         } else {
                             state = State.R_ATTK;
                             arrow_1 = new Arrow(world,
@@ -161,6 +164,7 @@ public class Chis extends Screen {
                                     body.getPosition().y / GameScreen.M_PER_PIXEL,
                                     'R');
                             game.addArrow(arrow_1);
+                            game2.addArrow(arrow_1);
                         }
                         break;
                 }
@@ -232,23 +236,23 @@ public class Chis extends Screen {
     }
 
     private boolean left = false;
-    private void Jump(boolean left){
+    public void Jump(boolean left){
         if(left == true) {
             body.applyForce(new Vec2(0f, -400f), body.getPosition());
-            game.x += 1f;
+            game.x += 1f; game2.x += 1f;
         }else{
             body.applyForce(new Vec2(0f, -400f), body.getPosition());
-            game.x -= 1f;
+            game.x -= 1f; game2.x -= 1f;
         }
     }
 
     public void Walk(boolean left){
         if(left == true) {
             body.applyForce(new Vec2(-1f, 0f), body.getPosition());
-            game.x += 1f;
+            game.x += 1f; game2.x += 1f;
         }else{
             body.applyForce(new Vec2(1f, 0f), body.getPosition());
-            game.x -= 1f;
+            game.x -= 1f; game2.x -= 1f;
         }
     }
 }
