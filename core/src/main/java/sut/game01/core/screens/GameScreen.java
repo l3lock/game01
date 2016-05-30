@@ -198,6 +198,7 @@ public class GameScreen extends Screen{
             sword.layer().destroy();
             destroyArrow.add(arrow);
             enemies--;
+            gameOver();
           }
 
           else if( b == sword.getBody()&& a == arrow.getBody()){
@@ -205,6 +206,7 @@ public class GameScreen extends Screen{
             sword.layer().destroy();
             destroyArrow.add(arrow);
             enemies--;
+            gameOver();
           }
 
           if( a == spear.getBody()&& b == arrow.getBody()){
@@ -212,6 +214,7 @@ public class GameScreen extends Screen{
             spear.layer().destroy();
             destroyArrow.add(arrow);
             enemies--;
+            gameOver();
           }
 
           else if( b == spear.getBody()&& a == arrow.getBody()){
@@ -219,6 +222,7 @@ public class GameScreen extends Screen{
             spear.layer().destroy();
             destroyArrow.add(arrow);
             enemies--;
+            gameOver();
           }
 
           if( a == crossbow.getBody()&& b == arrow.getBody()){
@@ -226,6 +230,7 @@ public class GameScreen extends Screen{
             crossbow.layer().destroy();
             destroyArrow.add(arrow);
             enemies--;
+            gameOver();
           }
 
           else if( b == crossbow.getBody()&& a == arrow.getBody()){
@@ -233,6 +238,7 @@ public class GameScreen extends Screen{
             crossbow.layer().destroy();
             destroyArrow.add(arrow);
             enemies--;
+            gameOver();
           }
 
           else if( bodies.get(a) == "ground" && b == arrow.getBody()){
@@ -331,9 +337,8 @@ public class GameScreen extends Screen{
     //============================================================
     // check enemies
     if(enemies <= 0 ){
-      ss.remove(ss.top());  // remove game screen
-      ss.remove(ss.top());  // remove cut scene
-      ss.push(gameScreen2);
+      clearScreen();
+      ss.push(new GameScreen2(ss));
     }
 
     //============================================================
@@ -371,6 +376,31 @@ public class GameScreen extends Screen{
 
       world.drawDebugData();
     }
+  }
+
+  public void gameOver(){
+    float dis;
+    if(sword.side() == true && crossbow.side() == true )  {
+      dis = sword.getBody().getPosition().x - crossbow.getBody().getPosition().x;
+      if(dis < 15){
+        clearScreen();
+        ss.push(new GameOver(ss));
+      }
+    }
+
+    if(sword.side() == true && spear.side() == true )  {
+      dis = sword.getBody().getPosition().x - spear.getBody().getPosition().x;
+      if(dis < 15){
+        clearScreen();
+        ss.push(new GameOver(ss));
+      }
+    }
+
+  }
+
+  public void clearScreen(){
+    ss.remove(ss.top());  // remove game screen
+    ss.remove(ss.top());  // remove cut scene
   }
 
 }

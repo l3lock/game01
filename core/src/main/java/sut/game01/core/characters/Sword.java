@@ -180,14 +180,9 @@ public class Sword extends Screen{
         }
         body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());
     }
-/*
-    public int side(){
-        boolean leftSide;
 
-        if(left) leftSide = true;
-
-        return leftSide;
+    public boolean side(){
+        return left;
     }
 
-    */
 }

@@ -337,8 +337,6 @@ public class GameScreen2 extends Screen{
         if(x < 0 ){ bg.setTranslation(x,0);} else { x = 0; }
         if(x <= -2240) x = -2240;
 
-        System.out.println(x);
-
         world.step(0.033f,10,10);
     }
 
