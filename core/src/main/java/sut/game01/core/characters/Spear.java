@@ -175,4 +175,8 @@ public class Spear extends Screen{
         }
         body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());
     }
+
+    public boolean side(){
+        return left;
+    }
 }
