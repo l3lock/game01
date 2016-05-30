@@ -28,6 +28,8 @@ import static playn.core.PlayN.*;
 
 public class GameScreen2 extends Screen{
 
+    //private GameScreen2 gameScreen2;
+
     //=======================================================
     // define for screen
 
@@ -40,13 +42,37 @@ public class GameScreen2 extends Screen{
 
     //=======================================================
     // define for character
+    private boolean destroy = false;
+
+    public enum Character {
+        SWORD, SPEAR, CROSSBOW
+    }
+
+    private Character character;
 
     private Chis chis;  // use chis character
     private Sword sword;
     private Spear spear;
     private Crossbow crossbow;
 
-    private static int enemies = 3;
+    // define item
+
+    //private Arrow arrow;
+    private static List<Arrow> arrowList;
+    private static List<Arrow> destroyArrow;
+
+    private GroupLayer groupArrow = graphics().createGroupLayer();
+
+    public void addArrow(Arrow arrow){
+        arrowList.add(arrow);
+    }
+
+    //=======================================================
+    // define
+
+    private int i = -1;
+    public static HashMap<Object,String> bodies = new HashMap<Object, String>();
+    private static int enemies = 5;
 
     //=======================================================
     // define for world
@@ -60,14 +86,21 @@ public class GameScreen2 extends Screen{
     private boolean showDebugDraw = true; // open debug mode
     //private boolean showDebugDraw = false; // close debug mode
 
-    public GameScreen2(final ScreenStack ss){
+    //===================================================================
+
+    public GameScreen2(){}
+
+    public GameScreen2(final ScreenStack ss) {
         this.ss = ss;
+        //this.gameScreen2 = new GameScreen2(ss);
 
         //==================================================================
         // insert bg part
 
         Image bgImage = assets().getImage("images/bg/level_2.png");
         this.bg = graphics().createImageLayer(bgImage);
+        bg.setTranslation(x , y);
+
 
         //==================================================================
         // insert back button
@@ -91,7 +124,7 @@ public class GameScreen2 extends Screen{
         EdgeShape groundShape = new EdgeShape();
         groundShape.set(new Vec2(0, height - 3), new Vec2(width, height - 3));
         ground.createFixture(groundShape, 0.0f);
-        //bodies.put(ground,"ground");
+        bodies.put(ground,"ground");
 
         EdgeShape groundTop = new EdgeShape();
         groundTop.set(new Vec2(-width, height - 15), new Vec2(width, height - 15));
@@ -103,18 +136,35 @@ public class GameScreen2 extends Screen{
 
         //==================================================================
         // insert chis
-        chis = new Chis(world, 50f, 357f);
+
+        chis = new Chis(world, 50f, 360f);
+        //bodies.put(chis,"Chis");
+
+        sword = new Sword(world, 400f, 360f);
+        //bodies.put(sword,"sword_");
+
+        spear = new Spear(world, 500f, 360f);
+        //bodies.put(spear,"spear_");
+
+        crossbow = new Crossbow(world ,650f, 360f);
+        //bodies.put(crossbow,"crossbow_");
+
+        arrowList     = new ArrayList<Arrow>();
+        destroyArrow  = new ArrayList<Arrow>();
     }
 
-
     @Override
-    public void wasShown() {
+    public void wasShown(){
         super.wasShown();
-
         this.layer.add(bg);
         this.layer.add(backButton);
 
         this.layer.add(chis.layer());
+        this.layer.add(sword.layer());
+        this.layer.add(spear.layer());
+        this.layer.add(crossbow.layer());
+
+        this.layer.add(groupArrow);
 
         //==================================================================
         // back button event
@@ -122,7 +172,91 @@ public class GameScreen2 extends Screen{
         backButton.addListener(new Mouse.LayerAdapter(){
             @Override
             public void onMouseUp(Mouse.ButtonEvent event){
-            ss.remove(ss.top());
+                ss.remove(ss.top());
+                ss.remove(ss.top());
+                enemies = 3;
+            }
+        });
+
+        //==================================================================
+        // contract
+
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                Body a = contact.getFixtureA().getBody();
+                Body b = contact.getFixtureB().getBody();
+
+                for(Arrow arrow: arrowList){
+
+                    if( a == sword.getBody()&& b == arrow.getBody()){
+                        character = Character.SWORD ; destroy = true;
+                        sword.layer().destroy();
+                        destroyArrow.add(arrow);
+                        enemies--;
+                    }
+
+                    else if( b == sword.getBody()&& a == arrow.getBody()){
+                        character = Character.SWORD ; destroy = true;
+                        sword.layer().destroy();
+                        destroyArrow.add(arrow);
+                        enemies--;
+                    }
+
+                    if( a == spear.getBody()&& b == arrow.getBody()){
+                        character = Character.SPEAR ; destroy = true;
+                        spear.layer().destroy();
+                        destroyArrow.add(arrow);
+                        enemies--;
+                    }
+
+                    else if( b == spear.getBody()&& a == arrow.getBody()){
+                        character = Character.SPEAR ; destroy = true;
+                        spear.layer().destroy();
+                        destroyArrow.add(arrow);
+                        enemies--;
+                    }
+
+                    if( a == crossbow.getBody()&& b == arrow.getBody()){
+                        character = Character.CROSSBOW ; destroy = true;
+                        crossbow.layer().destroy();
+                        destroyArrow.add(arrow);
+                        enemies--;
+                    }
+
+                    else if( b == crossbow.getBody()&& a == arrow.getBody()){
+                        character = Character.CROSSBOW ; destroy = true;
+                        crossbow.layer().destroy();
+                        destroyArrow.add(arrow);
+                        enemies--;
+                    }
+
+                    else if( bodies.get(a) == "ground" && b == arrow.getBody()){
+                        arrow.ContactCheck(contact);
+                        destroyArrow.add(arrow);
+                    }
+
+                    else if( bodies.get(b) == "ground" && a == arrow.getBody()){
+                        arrow.ContactCheck(contact);
+                        destroyArrow.add(arrow);
+                    }
+                }
+
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold manifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
             }
         });
 
@@ -149,24 +283,79 @@ public class GameScreen2 extends Screen{
     }
 
     @Override
-    public void update(int delta) {
+    public void update (int delta) {
         super.update(delta);
 
         chis.update(delta);
+        sword.update(delta);
+        spear.update(delta);
+        crossbow.update(delta);
+        bg.setTranslation(x,0);
+
+        if(destroy == true){
+            switch (character){
+
+                case SWORD: world.destroyBody(sword.getBody()); break;
+                case SPEAR: world.destroyBody(spear.getBody()); break;
+                case CROSSBOW: world.destroyBody(crossbow.getBody()); break;
+            }
+        }
+
+        //============================================================
+        // insert & delete Arrow
+
+        for(Arrow arrow: arrowList){
+            arrow.update(delta);
+        }
+
+        for(Arrow arrow: arrowList){
+            groupArrow.add(arrow.layer());
+        }
+
+        // delete arrow body
+        while(!destroyArrow.isEmpty()) {
+            destroyArrow.get(0).getBody().setActive(false);
+            arrowList.get(0).layer().destroy();
+            arrowList.remove(0);
+            world.destroyBody(destroyArrow.remove(0).getBody());
+        }
+
+        //============================================================
+        // check side
+        //sword.side();
+
+        //============================================================
+        // check enemies
+        if(enemies <= 0 ){
+            ss.remove(ss.top());  // remove game screen
+            ss.remove(ss.top());  // remove cut scene
+            //ss.push(gameScreen2);
+        }
 
         //============================================================
         // screen moving
         if(x < 0 ){ bg.setTranslation(x,0);} else { x = 0; }
-        // if(x <= -799) x = -799;
+        if(x <= -2240) x = -2240;
 
         System.out.println(x);
+
+        world.step(0.033f,10,10);
     }
 
     @Override
-    public void paint(Clock clock) {
+    public void paint(Clock clock){
         super.paint(clock);
 
+        bg.setTranslation(x , y);
+
         chis.paint(clock);
+        sword.paint(clock);
+        spear.paint(clock);
+        crossbow.paint(clock);
+
+        for(Arrow arrow: arrowList){
+            arrow.paint(clock);
+        }
 
         if(showDebugDraw){
             debugDraw.getCanvas().clear();
@@ -181,4 +370,5 @@ public class GameScreen2 extends Screen{
             world.drawDebugData();
         }
     }
+
 }
