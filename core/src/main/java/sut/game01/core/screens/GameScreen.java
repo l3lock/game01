@@ -28,6 +28,8 @@ import static playn.core.PlayN.*;
 
 public class GameScreen extends Screen{
 
+  private GameScreen2 gameScreen2;
+
   //=======================================================
   // define for screen
 
@@ -56,8 +58,7 @@ public class GameScreen extends Screen{
 
   // define item
 
-  private int shoot = 0;
-  private Arrow arrow;
+  //private Arrow arrow;
   private static List<Arrow> arrowList;
   private static List<Arrow> destroyArrow;
 
@@ -72,7 +73,7 @@ public class GameScreen extends Screen{
 
   private int i = -1;
   public static HashMap<Object,String> bodies = new HashMap<Object, String>();
-  public static int enemies = 3;
+  private static int enemies = 3;
 
   //=======================================================
   // define for world
@@ -92,6 +93,7 @@ public class GameScreen extends Screen{
 
   public GameScreen(final ScreenStack ss) {
     this.ss = ss;
+    this.gameScreen2 = new GameScreen2(ss);
 
     //==================================================================
     // insert bg part
@@ -147,7 +149,7 @@ public class GameScreen extends Screen{
     spear = new Spear(world, 500f, 360f);
     //bodies.put(spear,"spear_");
 
-    crossbow = new Crossbow(world ,630f, 360f);
+    crossbow = new Crossbow(world ,650f, 360f);
     //bodies.put(crossbow,"crossbow_");
 
     arrowList     = new ArrayList<Arrow>();
@@ -325,6 +327,14 @@ public class GameScreen extends Screen{
     //============================================================
     // check side
     //sword.side();
+
+    //============================================================
+    // check enemies
+    if(enemies <= 0 ){
+      ss.remove(ss.top());  // remove game screen
+      ss.remove(ss.top());  // remove cut scene
+      ss.push(gameScreen2);
+    }
 
     //============================================================
     // screen moving

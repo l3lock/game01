@@ -78,11 +78,26 @@ public class LoadScreen extends Screen{
         this.lv2 = graphics().createImageLayer(lvImage2);
         lv2.setTranslation(250,215);
 
+        lv2.addListener(new Mouse.LayerAdapter(){
+            @Override
+            public void onMouseUp(Mouse.ButtonEvent event){
+                ss.push(new GameScreen2(ss));
+            }
+        });
+
         //==================================================================
         // insert setting button
         Image lvImage3 = assets().getImage("images/button/num_03.png");
         this.lv3 = graphics().createImageLayer(lvImage3);
         lv3.setTranslation(385,100);
+/*
+        lv3.addListener(new Mouse.LayerAdapter(){
+            @Override
+            public void onMouseUp(Mouse.ButtonEvent event){
+                ss.push(new GameScreen3(ss));
+            }
+        });
+*/
     }
 
     @Override
