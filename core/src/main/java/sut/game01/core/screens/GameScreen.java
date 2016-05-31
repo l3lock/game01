@@ -35,6 +35,7 @@ public class GameScreen extends Screen{
 
   private ScreenStack ss;
   private ImageLayer bg;
+  private ImageLayer next;
   private ImageLayer level_1bg;
   private ImageLayer backButton;
 
@@ -113,6 +114,12 @@ public class GameScreen extends Screen{
     backButton.setTranslation(10,405);
 
     //==================================================================
+    // insert clear stage
+
+    Image clearImage = assets().getImage("images/cutscene/Next/clear.png");
+    this.next = graphics().createImageLayer(clearImage);
+
+    //==================================================================
     // define world
 
     Vec2 gravity = new Vec2(0.0f,10.0f);
@@ -156,6 +163,7 @@ public class GameScreen extends Screen{
     destroyArrow  = new ArrayList<Arrow>();
   }
 
+  int time;
   @Override
   public void wasShown(){
     super.wasShown();
@@ -306,17 +314,18 @@ public class GameScreen extends Screen{
       arrowList.remove(0);
       world.destroyBody(destroyArrow.remove(0).getBody());
     }
-
-    //============================================================
-    // check side
-    //sword.side();
-
     //============================================================
     // check enemies
-    if(enemies <= 0 ){
-      ss.remove(ss.top());
-      ss.push(new GameScreen2(ss));
-      enemies = 3;
+
+    if(enemies <= 0 ) {
+      time += delta;
+      this.layer.add(next);
+    }
+
+    if(time > 2400 * 1 ) {
+        ss.remove(ss.top());
+        ss.push(new GameScreen2(ss));
+        enemies = 3;
     }
 
     //============================================================
@@ -376,21 +385,29 @@ public class GameScreen extends Screen{
 
       } else if (SpearDes == true){
 
-        if (crossbow.side() == true && c < 25) {
+        if (crossbow.side() == true && c <= 25) {
           ss.remove(ss.top());
           ss.push(new GameOver(ss));
         } else {enemies--;}
 
         System.out.println("2");
 
-      } else if (CrossDes == true){
-        if (spear.side() == true && b < 25){
+      } else if (CrossDes == true) {
+        if (spear.side() == true && b <= 25) {
           ss.remove(ss.top());
           ss.push(new GameOver(ss));
-        } else {enemies--;}
+        } else {
+          enemies--;
+        }
 
         System.out.println("3");
 
+      } else if(spear.side() == true && b <= 25 ||
+              crossbow.side() == true && c <= 25){
+        ss.remove(ss.top());
+        ss.push(new GameOver(ss));
+
+        System.out.println("3.4");
       } else {enemies--;
           System.out.println("4");
       }
@@ -406,7 +423,7 @@ public class GameScreen extends Screen{
 
       } else if (SwordDes == true){
 
-        if (crossbow.side() == true && c < 25) {
+        if (crossbow.side() == true && c <= 25) {
           ss.remove(ss.top());
           ss.push(new GameOver(ss));
         } else {enemies--;}
@@ -414,15 +431,23 @@ public class GameScreen extends Screen{
         System.out.println("6");
 
       } else if (CrossDes == true){
-        if (sword.side() == false && a < 25){
+        if (sword.side() == false && a <= 25){
           ss.remove(ss.top());
           ss.push(new GameOver(ss));
         } else {enemies--;}
 
         System.out.println("7");
 
-      } else {enemies--;
+      } else if(sword.side() == false && a <= 25 ||
+              crossbow.side() == true){
+
+        ss.remove(ss.top());
+        ss.push(new GameOver(ss));
+
         System.out.println("8");
+
+      }else{enemies--;
+        System.out.println("9");
       }
     }
 
@@ -433,27 +458,35 @@ public class GameScreen extends Screen{
     else if(CrossDes == true){
       if(SwordDes == true && SpearDes == true){
         enemies--;
-        System.out.println("9");
+        System.out.println("10");
 
       } else if (SwordDes == true){
 
-        if (spear.side() == true && b < 25) {
-          ss.remove(ss.top());
-          ss.push(new GameOver(ss));
-        } else {enemies--;}
-
-        System.out.println("10");
-
-      } else if (SpearDes == true){
-        if (sword.side() == true && a < 25){
+        if (spear.side() == true && b <= 25) {
           ss.remove(ss.top());
           ss.push(new GameOver(ss));
         } else {enemies--;}
 
         System.out.println("11");
 
-      } else {enemies--;
+      } else if (SpearDes == true){
+        if (sword.side() == true && a <= 25){
+          ss.remove(ss.top());
+          ss.push(new GameOver(ss));
+        } else {enemies--;}
+
         System.out.println("12");
+
+      } else if(sword.side() == false && a <= 25 ||
+              spear.side() == false && b <= 25){
+
+        ss.remove(ss.top());
+        ss.push(new GameOver(ss));
+
+        System.out.println("13");
+
+      } else {enemies--;
+        System.out.println("14");
       }
     }
 

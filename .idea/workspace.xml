@@ -25,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GameScreen.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen.java">
+      <file leaf-file-name="GameScreen2.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="416" column="45" selection-start-line="416" selection-start-column="45" selection-end-line="416" selection-end-column="45" />
+            <state relative-caret-position="8432">
+              <caret line="522" column="50" selection-start-line="522" selection-start-column="50" selection-end-line="522" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -91,16 +91,20 @@
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/item/arrow/Arrow.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/Setting.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/StartScreen.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/LoadScreen.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Chis.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameOver.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/cutscene/NewGame.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Crossbow.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Spear.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword_2.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen2.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/cutscene/Next.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword2.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Spear2.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Crossbow.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameOver.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/LoadScreen.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen3.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen2.java" />
       </list>
     </option>
   </component>
@@ -713,7 +717,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33438486" sideWeight="0.49707174" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33438486" sideWeight="0.49707174" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -756,10 +760,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameOver.java" />
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/HomeScreen.java" />
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/MyGame.java" />
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/StartScreen.java" />
     <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen.java" />
     <entry file="file://$PROJECT_DIR$/core/game01-core.iml">
       <provider selected="true" editor-type-id="text-editor">
@@ -951,52 +951,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/LoadScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="83" column="45" selection-start-line="83" selection-start-column="45" selection-end-line="83" selection-end-column="45" />
-          <folding>
-            <element signature="e#2733#2910#0" expanded="false" />
-            <element signature="e#2909#2910#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/cutscene/NewGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="66" column="17" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameOver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="31" column="32" selection-start-line="25" selection-start-column="1" selection-end-line="31" selection-end-column="32" />
-          <folding>
-            <element signature="e#1098#1236#0" expanded="false" />
-            <element signature="e#1235#1236#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Spear.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="175" column="72" selection-start-line="175" selection-start-column="72" selection-end-line="175" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Crossbow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="174" column="9" selection-start-line="174" selection-start-column="9" selection-end-line="174" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword_2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1005,32 +959,113 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/cutscene/Next.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2839">
-          <caret line="183" column="5" selection-start-line="0" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+        <state relative-caret-position="-235">
+          <caret line="33" column="55" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen2.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-711">
-          <caret line="149" column="36" selection-start-line="149" selection-start-column="36" selection-end-line="149" selection-end-column="36" />
+        <state relative-caret-position="105">
+          <caret line="169" column="32" selection-start-line="0" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+          <folding>
+            <element signature="e#4895#4896#0" expanded="false" />
+            <element signature="e#4922#4923#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Sword2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="176" column="69" selection-start-line="176" selection-start-column="69" selection-end-line="176" selection-end-column="69" />
+          <folding>
+            <element signature="e#4837#4838#0" expanded="true" />
+            <element signature="e#4864#4865#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Crossbow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="175" column="71" selection-start-line="175" selection-start-column="71" selection-end-line="175" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Spear.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="181" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/characters/Spear2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1819">
+          <caret line="32" column="72" selection-start-line="32" selection-start-column="72" selection-end-line="32" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameOver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="74" column="7" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/LoadScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="98" column="11" selection-start-line="98" selection-start-column="11" selection-end-line="98" selection-end-column="11" />
+          <folding>
+            <element signature="e#3216#3393#0" expanded="true" />
+            <element signature="e#3392#3393#0" expanded="true" />
+            <element signature="e#3701#3934#0" expanded="true" />
+            <element signature="e#3933#3934#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/cutscene/NewGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="87" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="58" column="48" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1975#1991#0" expanded="true" />
-            <element signature="e#2059#2075#0" expanded="true" />
-            <element signature="e#5472#5669#0" expanded="true" />
-            <element signature="e#5668#5669#0" expanded="true" />
+            <element signature="e#1313#1481#0" expanded="true" />
+            <element signature="e#1480#1481#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="416" column="45" selection-start-line="416" selection-start-column="45" selection-end-line="416" selection-end-column="45" />
+        <state relative-caret-position="221">
+          <caret line="406" column="8" selection-start-line="406" selection-start-column="8" selection-end-line="407" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/screens/GameScreen2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8432">
+          <caret line="522" column="50" selection-start-line="522" selection-start-column="50" selection-end-line="522" selection-end-column="50" />
           <folding />
         </state>
       </provider>
