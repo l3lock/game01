@@ -3,9 +3,7 @@ package sut.game01.core.screens;
 import static playn.core.PlayN.*;
 import static playn.core.PlayN.graphics;
 
-import playn.core.Mouse;
-import playn.core.Image;
-import playn.core.ImageLayer;
+import playn.core.*;
 
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
@@ -66,5 +64,14 @@ public class GameOver extends Screen{
     this.layer.add(bg);
     this.layer.add(backButton);
     this.layer.add(settingButton);
+
+    PlayN.keyboard().setListener(new Keyboard.Adapter() {
+      @Override
+      public void onKeyUp(Keyboard.Event event) {
+        if(event.key() == Key.ESCAPE) {
+          ss.remove(ss.top());
+        }
+      }
+    });
   }
 }

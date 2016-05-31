@@ -11,10 +11,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 import playn.core.*;
 import playn.core.util.Clock;
 import playn.core.CanvasImage;
-import sut.game01.core.characters.Chis;
-import sut.game01.core.characters.Crossbow;
-import sut.game01.core.characters.Spear;
-import sut.game01.core.characters.Sword;
+import sut.game01.core.characters.*;
 import sut.game01.core.item.arrow.Arrow;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
@@ -29,13 +26,14 @@ import static playn.core.PlayN.*;
 public class GameScreen2 extends Screen{
 
     private GameScreen2 gameScreen2;
-    //private GameScreen2 gameScreen2;
+    //private GameScreen3 gameScreen3;
 
     //=======================================================
     // define for screen
 
     private ScreenStack ss;
     private ImageLayer bg;
+    private ImageLayer next;
     private ImageLayer backButton;
 
     public static float x ;
@@ -46,14 +44,16 @@ public class GameScreen2 extends Screen{
     private boolean destroy = false;
 
     public enum Character {
-        SWORD, SPEAR, CROSSBOW
+        SWORD, SWORD2, SPEAR, SPEAR2, CROSSBOW
     }
 
     private Character character;
 
     private Chis chis;  // use chis character
     private Sword sword;
+    private Sword2 sword2;
     private Spear spear;
+    private Spear2 spear2;
     private Crossbow crossbow;
 
     // define item
@@ -103,6 +103,11 @@ public class GameScreen2 extends Screen{
         this.bg = graphics().createImageLayer(bgImage);
         bg.setTranslation(x , y);
 
+        //==================================================================
+        // insert clear stage
+
+        Image clearImage = assets().getImage("images/cutscene/Next/clear.png");
+        this.next = graphics().createImageLayer(clearImage);
 
         //==================================================================
         // insert back button
@@ -142,17 +147,14 @@ public class GameScreen2 extends Screen{
         chis = new Chis(world, 50f, 360f);
         //bodies.put(chis,"Chis");
 
-        sword = new Sword(world, 700f, 360f);
-        bodies.put(sword,"sword_1");
-        sword = new Sword(world, 800f, 360f);
-        bodies.put(sword,"sword_2");
-        sword = new Sword(world, 900f, 360f);
-        bodies.put(sword,"sword_3");
+        sword = new Sword(world, 1700f, 360f);
+        sword2 = new Sword2(world, 700f, 360f);
 
-        spear = new Spear(world, 500f, 360f);
+        spear = new Spear(world, 1750f, 360f);
+        spear2 = new Spear2(world, 400f, 360f);
         //bodies.put(spear,"spear_");
 
-        crossbow = new Crossbow(world ,650f, 360f);
+        crossbow = new Crossbow(world ,1770f, 360f);
         //bodies.put(crossbow,"crossbow_");
 
         arrowList     = new ArrayList<Arrow>();
@@ -166,8 +168,13 @@ public class GameScreen2 extends Screen{
         this.layer.add(backButton);
 
         this.layer.add(chis.layer());
+
         this.layer.add(sword.layer());
+        this.layer.add(sword2.layer());
+
         this.layer.add(spear.layer());
+        this.layer.add(spear2.layer());
+
         this.layer.add(crossbow.layer());
 
         this.layer.add(groupArrow);
@@ -179,7 +186,7 @@ public class GameScreen2 extends Screen{
             @Override
             public void onMouseUp(Mouse.ButtonEvent event){
                 ss.remove(ss.top());
-                enemies = 3;
+                enemies = 5;
             }
         });
 
@@ -204,12 +211,32 @@ public class GameScreen2 extends Screen{
                         }
                     }
 
+                    if( a == sword2.getBody()&& b == arrow.getBody() ||
+                            b == sword2.getBody()&& a == arrow.getBody() ){
+
+                        if(sword2.getBody().getPosition().x != 25) {
+                            character = Character.SWORD2;  destroy = true;
+                            sword2.layer().destroy();      SwordDes = true;
+                            destroyArrow.add(arrow);       gameOver();
+                        }
+                    }
+
                     if( a == spear.getBody()&& b == arrow.getBody() ||
                             b == spear.getBody()&& a == arrow.getBody()){
 
                         if(sword.getBody().getPosition().x != 25) {
                             character = Character.SPEAR;  destroy = true;
                             spear.layer().destroy();      SpearDes = true;
+                            destroyArrow.add(arrow);      gameOver();
+                        }
+                    }
+
+                    if( a == spear2.getBody()&& b == arrow.getBody() ||
+                            b == spear2.getBody()&& a == arrow.getBody()){
+
+                        if(sword.getBody().getPosition().x != 25) {
+                            character = Character.SPEAR2;  destroy = true;
+                            spear2.layer().destroy();      SpearDes2 = true;
                             destroyArrow.add(arrow);      gameOver();
                         }
                     }
@@ -271,13 +298,19 @@ public class GameScreen2 extends Screen{
         }
     }
 
+    int time;
     @Override
     public void update (int delta) {
         super.update(delta);
 
         chis.update(delta);
+
         sword.update(delta);
+        sword2.update(delta);
+
         spear.update(delta);
+        spear2.update(delta);
+
         crossbow.update(delta);
         bg.setTranslation(x,0);
 
@@ -285,7 +318,9 @@ public class GameScreen2 extends Screen{
             switch (character){
 
                 case SWORD: world.destroyBody(sword.getBody()); break;
+                case SWORD2: world.destroyBody(sword2.getBody()); break;
                 case SPEAR: world.destroyBody(spear.getBody()); break;
+                case SPEAR2: world.destroyBody(spear2.getBody()); break;
                 case CROSSBOW: world.destroyBody(crossbow.getBody()); break;
             }
         }
@@ -310,14 +345,17 @@ public class GameScreen2 extends Screen{
         }
 
         //============================================================
-        // check side
-        //sword.side();
-
-        //============================================================
         // check enemies
-        if(enemies <= 0 ){
-            ss.remove(ss.top());  // remove game screen
-            //ss.push(gameScreen3);
+
+        if(enemies <= 0 ) {
+            time += delta;
+            this.layer.add(next);
+        }
+
+        if(time > 2400 * 1 ) {
+            //ss.remove(ss.top());
+            //ss.push(new GameScreen3(ss));
+            enemies = 5;
         }
 
         //============================================================
@@ -335,8 +373,13 @@ public class GameScreen2 extends Screen{
         bg.setTranslation(x , y);
 
         chis.paint(clock);
+
         sword.paint(clock);
+        sword2.paint(clock);
+
         spear.paint(clock);
+        spear2.paint(clock);
+
         crossbow.paint(clock);
 
         for(Arrow arrow: arrowList){
@@ -359,11 +402,13 @@ public class GameScreen2 extends Screen{
 
     public boolean SwordDes = false;
     public boolean SpearDes = false;
+    public boolean SpearDes2 = false;
     public boolean CrossDes = false;
 
     public void gameOver(){
 
         float a = sword.getBody().getPosition().x;
+        float d = sword2.getBody().getPosition().x;
         float b = spear.getBody().getPosition().x;
         float c = crossbow.getBody().getPosition().x;
 
@@ -391,6 +436,12 @@ public class GameScreen2 extends Screen{
                 } else {enemies--;}
 
                 System.out.println("3");
+            } else if(spear.side() == true && b <= 25 ||
+                    crossbow.side() == true && c <= 25){
+
+                ss.remove(ss.top());
+                ss.push(new GameOver(ss));
+                System.out.println("3.4");
 
             } else {enemies--;
                 System.out.println("4");
@@ -445,18 +496,36 @@ public class GameScreen2 extends Screen{
 
                 System.out.println("10");
 
-            } else if (SpearDes == true){
-                if (sword.side() == true && a < 25){
+            } else if (SpearDes == true) {
+                if (sword.side() == true && a < 25) {
                     ss.remove(ss.top());
                     ss.push(new GameOver(ss));
-                } else {enemies--;}
+                } else {
+                    enemies--;
+                }
 
                 System.out.println("11");
 
-            } else {enemies--;
-                System.out.println("12");
+            }else if(sword.side() == false && a <= 25 ||
+                        spear.side() == false && b <= 25) {
+
+                ss.remove(ss.top());
+                ss.push(new GameOver(ss));
+
+                System.out.println("13");
+
+            }else {enemies--;
+                System.out.println("14");
             }
         }
+
+        if (SpearDes2 == true ){
+            if(sword2.side() == true && d <= 25) {
+                ss.remove(ss.top());
+                ss.push(new GameOver(ss));
+            }
+        } else {enemies--;}
+
 
         System.out.println("side : " + sword.side() + "     " + spear.side() + "     " + crossbow.side());
         System.out.println("destroy : " + SwordDes + "     " + SpearDes + "     " + CrossDes );

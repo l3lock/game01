@@ -12,7 +12,7 @@ import sut.game01.core.spriteManage.Sprite;
 import sut.game01.core.spriteManage.SpriteLoader;
 import tripleplay.game.Screen;
 
-public class Crossbow extends Screen{
+public class Spear2 extends Screen{
     private Sprite sprite;
     private int si = 0;
     private boolean hasLoaded = false;
@@ -24,15 +24,14 @@ public class Crossbow extends Screen{
         ATTK
     }
 
-    private State state = State.L_WALK;
+    private State state = State.L_ALERT;
 
     private Body body;
 
     private int e = 0;
 
-    public Crossbow(final World world, final float x_px, final float y_px) {
-
-        sprite = SpriteLoader.getSprite("images/characters/crossbow/crossbow.json");
+    public Spear2(final World world,final float x_px, final float y_px){
+        sprite = SpriteLoader.getSprite("images/characters/sparman/sparman.json");
 
         sprite.addCallback(new Callback<Sprite>() {
 
@@ -87,7 +86,8 @@ public class Crossbow extends Screen{
     public Layer layer() {
         return sprite.layer();
     }
-    public Body getBody(){ return this.body; }
+
+    public Body getBody() {return body; }
 
     public void update(int delta) {
         if(hasLoaded == false) return;
@@ -95,44 +95,44 @@ public class Crossbow extends Screen{
         e += delta;
         if(e > 250) {
             switch(state) {
-                case R_IDLE:
+                case R_ALERT:
                     if (!(si >= 0 && si <= 3)){
                         si = 0;
                     }
                     break;
 
-                case L_IDLE:
+                case L_ALERT:
                     if (!(si >= 5 && si <= 8)){
                         si = 5;
                     }
                     break;
 
-                case R_ALERT:
-                    if (!(si >= 10 && si <= 13)){
+                case R_IDLE:
+                    if (!(si >= 10 && si <= 12)){
                         si = 10;
                     }
                     break;
 
-                case L_ALERT:
-                    if (!(si >= 15 && si <= 18)){
-                        si = 15;
+                case L_IDLE:
+                    if (!(si >= 14 && si <= 16)){
+                        si = 14;
                     }
                     break;
 
                 case R_WALK:
-                    if (!(si >= 20 && si <= 22)){
-                        si = 20;
+                    if (!(si >= 19 && si <= 21)){
+                        si = 19;
                     }
                     break;
 
                 case L_WALK:
-                    if (!(si >= 24 && si <= 26)){
-                        si = 24;
+                    if (!(si >= 23 && si <= 25)){
+                        si = 23;
                     }
                     break;
 
                 case ATTK:
-                    if (!(si >= 28 && si <= 31)){
+                    if (!(si >= 28 && si <= 29)){
                         si = 28;
                     }
                     break;
@@ -148,7 +148,7 @@ public class Crossbow extends Screen{
         if (!hasLoaded) return;
 
         sprite.layer().setTranslation(
-                (body.getPosition().x / GameScreen.M_PER_PIXEL),
+                (body.getPosition().x / GameScreen.M_PER_PIXEL) + 14,
                 body.getPosition().y / GameScreen.M_PER_PIXEL);
 
         // sprite.layer().setRotation(body.getAngle());
@@ -167,10 +167,10 @@ public class Crossbow extends Screen{
     private boolean left = true;
     private float temp = -1f;
     private void Walk(){
-        if(body.getPosition().x  >= 25f) {
+        if(body.getPosition().x  >= 30f) {
             temp = -1f; state = State.L_WALK;
         }
-        else if (body.getPosition().x <= 19f) {
+        else if (body.getPosition().x <= 15f) {
             temp = 1f; state = State.R_WALK;
         }
         body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());

@@ -177,6 +177,7 @@ public class Sword extends Screen{
             temp = 1f; state = State.R_WALK;
         }
         body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());
+
     }
 
     public boolean side(){
