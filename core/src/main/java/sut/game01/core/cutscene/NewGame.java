@@ -62,6 +62,7 @@ public class NewGame extends Screen {
             @Override
             public void onKeyUp(Keyboard.Event event) {
                 if(event.key() == Key.ESCAPE) {
+                    ss.remove(ss.top());
                     ss.push(new GameScreen(ss));
                 }
             }
