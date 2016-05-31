@@ -174,7 +174,6 @@ public class Spear extends Screen{
             temp = 1f; state = State.R_WALK;
         }
         body.applyForce(new Vec2(2.5f * temp, 0f), body.getPosition());
-        //System.out.println(body.getPosition().x);
     }
 
     public boolean side(){

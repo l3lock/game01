@@ -142,12 +142,12 @@ public class GameScreen2 extends Screen{
         chis = new Chis(world, 50f, 360f);
         //bodies.put(chis,"Chis");
 
-        sword = new Sword(world, 400f, 360f);
-        //bodies.put(sword,"sword_");
-
-        for(int i = 0; i > 2; i++){
-            swordList.put(sword,"sword_" + i);
-        }
+        sword = new Sword(world, 700f, 360f);
+        bodies.put(sword,"sword_1");
+        sword = new Sword(world, 800f, 360f);
+        bodies.put(sword,"sword_2");
+        sword = new Sword(world, 900f, 360f);
+        bodies.put(sword,"sword_3");
 
         spear = new Spear(world, 500f, 360f);
         //bodies.put(spear,"spear_");
