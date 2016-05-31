@@ -414,7 +414,7 @@ public class GameScreen extends Screen{
         System.out.println("6");
 
       } else if (CrossDes == true){
-        if (sword.side() == true && a < 25){
+        if (sword.side() == false && a < 25){
           ss.remove(ss.top());
           ss.push(new GameOver(ss));
         } else {enemies--;}
